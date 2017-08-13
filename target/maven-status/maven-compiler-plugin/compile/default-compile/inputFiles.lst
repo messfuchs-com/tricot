@@ -1,0 +1,13 @@
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/App.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/GSIReader.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/GSIWriter.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/DataStreamer.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/DataWriter.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/Site.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/Coordinate.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/Station.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/DataReader.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/Measurement.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/CSVWriter.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/Writable.java
+/home/jurgen/Documents/Projects/surveyconverter/src/main/java/com/messfuchs/geo/model/Readable.java
