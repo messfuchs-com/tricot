@@ -1,4 +1,4 @@
-package com.messfuchs.geo.model;
+package com.messfuchs.geo.models;
 
 public interface Writable {
 

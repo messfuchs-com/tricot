@@ -1,6 +1,6 @@
-package com.messfuchs.geo.model;
+package com.messfuchs.geo.models;
 
-public class Coordinate {
+public class Coordinate implements  Comparable {
     public Double east, north, height;
     public String name, code;
 
@@ -27,6 +27,11 @@ public class Coordinate {
     public Coordinate(Double east, Double north) {
         this(east, north, 0.0);
     }
+
+    public Coordinate(String name) {
+        this();
+        this.name = name;
+    }
     
     public Coordinate() {
         this(null, null);
@@ -42,6 +47,8 @@ public class Coordinate {
                 ", code='" + code + '\'' +
                 '}';
     }
+
+    public String getCompareString() {return this.getName(); }
 
     public Double getEast() {
         return east;
