@@ -29,14 +29,8 @@ public abstract class DataReader extends DataStreamer implements Readable {
             while (sc.hasNextLine()) {
 
                 String line = sc.nextLine();
-                // System.out.println("Parsing '" + line + "'");
 
                 // Define Site
-
-                if (site == null) {
-                    site = new Site();
-                    this.siteSet.add(site);
-                }
 
                 Site tempSite = parseSiteLine(line);
                 if (tempSite != null) {
@@ -47,12 +41,15 @@ public abstract class DataReader extends DataStreamer implements Readable {
 
                 // Define Station
 
-                if (station == null) {
-                    station = new Station();
-                }
-
                 Station tempStation = parseStationLine(line);
                 if (tempStation != null) {
+
+                    if (site == null) {
+                        site = new Site();
+                        this.siteSet.add(site);
+                        System.out.println("No Site definition before Station definition, creating dummy");
+                    }
+
                     station = tempStation;
                     continue;
                 }
@@ -61,8 +58,15 @@ public abstract class DataReader extends DataStreamer implements Readable {
 
                 TachyResponse tachyResponse = parseResponseLine(line);
                 if (tachyResponse != null) {
+
+                    if (station == null) {
+                        station = new Station();
+                        System.out.println("No Station definition before Response definition, creating dummy");
+                    }
+
                     TachyMeasurement tachyMeasurement = new TachyMeasurement(station.name, tachyResponse.target, tachyResponse);
                     station.addTachyMeasurement(tachyMeasurement);
+                    site.addMeasurement(tachyMeasurement);
                     continue;
                 }
 

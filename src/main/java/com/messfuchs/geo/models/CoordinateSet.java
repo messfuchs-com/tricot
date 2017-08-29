@@ -24,6 +24,10 @@ public class CoordinateSet {
         return null;
     }
 
+    public int size() {
+        return this.getSet().size();
+    }
+
     public Set<Coordinate> getSet() {
         return set;
     }

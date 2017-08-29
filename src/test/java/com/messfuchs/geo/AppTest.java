@@ -5,6 +5,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.Formatter;
+
 /**
  * Unit test for simple App.
  */
@@ -70,11 +72,15 @@ public class AppTest
         System.out.println("\n\n--- Generate CSV\n");
         System.out.println(csvWriter.writeData());
         System.out.println("\n");
+        System.out.println(csvWriter.getSiteSummary());
+        System.out.println("\n");
 
         GSIWriter gsiWriter = new GSIWriter( "src/test/resources/IKNO.GSI");
         gsiWriter.addSite(s);
         System.out.println("\n\n--- Generate GSI\n");
         System.out.println(gsiWriter.writeData());
+        System.out.println("\n");
+        System.out.println(gsiWriter.getSiteSummary());
         System.out.println("\n");
 
         assertTrue(true);
@@ -89,6 +95,7 @@ public class AppTest
         GSIReader gsiReader = new GSIReader(gsiFilePath);
         gsiReader.readData();
         System.out.println(gsiReader.siteSet);
+        System.out.println(gsiReader.getSiteSummary());
 
         assertTrue( true );
     }

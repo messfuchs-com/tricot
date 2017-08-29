@@ -1,5 +1,6 @@
 package com.messfuchs.geo.models;
 
+import java.util.Formatter;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -40,5 +41,17 @@ public class DataStreamer {
                 continue;
             }
         }
+    }
+
+    public String getSiteSummary() {
+        StringBuilder s = new StringBuilder();
+        Formatter f = new Formatter(s);
+        s.append("Summary\n");
+        f.format("%15s | %13s | %14s\n", "Site", "# Coordinates", "# Measurements");
+        s.append(" ---------------+---------------+---------------\n");
+        for (Site site: this.siteSet) {
+            f.format("%15s | %13d | %14d\n", site.name, site.coordinateSet.size(), site.measurementSet.size());
+        }
+        return s.toString();
     }
 }
