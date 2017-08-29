@@ -5,18 +5,18 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class CoordinateSet {
+public class LocalCoordinateSet {
 
-    private Set<Coordinate> set = new TreeSet<Coordinate>(new CompareSorter());
+    private Set<LocalCoordinate> set = new TreeSet<LocalCoordinate>(new CompareSorter());
 
-    public boolean add(Coordinate coordinate) {
+    public boolean add(LocalCoordinate coordinate) {
         return this.set.add(coordinate);
     }
 
-    public Coordinate findCoordinatebyName(String name) {
-        Iterator<Coordinate> iterator = set.iterator();
+    public LocalCoordinate findLocalCoordinatebyName(String name) {
+        Iterator<LocalCoordinate> iterator = set.iterator();
         while(iterator.hasNext()) {
-            Coordinate coordinate = iterator.next();
+            LocalCoordinate coordinate = iterator.next();
             if (coordinate.getName() == name) {
                 return coordinate;
             }
@@ -28,7 +28,7 @@ public class CoordinateSet {
         return this.getSet().size();
     }
 
-    public Set<Coordinate> getSet() {
+    public Set<LocalCoordinate> getSet() {
         return set;
     }
 }

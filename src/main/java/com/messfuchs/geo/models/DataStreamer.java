@@ -23,7 +23,7 @@ public class DataStreamer {
         }
     }
 
-    public void addCoordinate (String siteName, Coordinate coordinate) {
+    public void addCoordinate (String siteName, LocalCoordinate coordinate) {
         this.initSite(siteName);
         for (Site site: siteSet) {
             if (site.getName() == siteName) {

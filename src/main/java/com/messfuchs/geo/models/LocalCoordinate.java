@@ -1,10 +1,10 @@
 package com.messfuchs.geo.models;
 
-public class Coordinate implements  Comparable {
+public class LocalCoordinate implements  Comparable {
     public Double east, north, height;
     public String name, code;
 
-    public Coordinate(String name, Double east, Double north, Double height, String code) {
+    public LocalCoordinate(String name, Double east, Double north, Double height, String code) {
         this.name = name;
         this.east = east;
         this.north = north;
@@ -12,28 +12,28 @@ public class Coordinate implements  Comparable {
         this.code = code;
     }
 
-    public Coordinate(String name, Double east, Double north, Double height) {
+    public LocalCoordinate(String name, Double east, Double north, Double height) {
         this(name, east, north, height, null);
     }
 
-    public Coordinate(String name, Double east, Double north) {
+    public LocalCoordinate(String name, Double east, Double north) {
         this(name, east, north, 0.0);
     }
 
-    public Coordinate(Double east, Double north, Double height) {
+    public LocalCoordinate(Double east, Double north, Double height) {
         this("Coordinate", east, north, height, null);
     }
 
-    public Coordinate(Double east, Double north) {
+    public LocalCoordinate(Double east, Double north) {
         this(east, north, 0.0);
     }
 
-    public Coordinate(String name) {
+    public LocalCoordinate(String name) {
         this();
         this.name = name;
     }
     
-    public Coordinate() {
+    public LocalCoordinate() {
         this(null, null);
     }
 
@@ -95,7 +95,7 @@ public class Coordinate implements  Comparable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Coordinate point = (Coordinate) o;
+        LocalCoordinate point = (LocalCoordinate) o;
 
         if (Double.compare(point.getEast(), getEast()) != 0) return false;
         if (Double.compare(point.getNorth(), getNorth()) != 0) return false;

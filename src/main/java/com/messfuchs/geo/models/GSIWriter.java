@@ -39,7 +39,7 @@ public class GSIWriter extends DataWriter {
             f.format("*41%04d%s 42....%s\n", lineCount, this.toGSI(SITE_CODE), this.toGSI(site.name));
             lineCount++;
 
-            for (Coordinate coordinate : site.getCoordinateSet()) {
+            for (LocalCoordinate coordinate : site.getCoordinateSet()) {
                 f.format("*11%04d%s", lineCount, this.toGSI(coordinate.getName()));
                 f.format(" 81..40%+0" + (this.gsiSize+1) + ".0f", coordinate.getEast()*1e+3);
                 f.format(" 82..40%+0" + (this.gsiSize+1) + ".0f", coordinate.getNorth()*1e+3);

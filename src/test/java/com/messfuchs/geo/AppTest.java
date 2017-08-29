@@ -45,8 +45,8 @@ public class AppTest
     public void testBasic() {
         Site s = new Site("IKNO");
         
-        Coordinate c2 = new Coordinate("p2", 111.941, 209.99, -10.41, "MP");
-        Coordinate c1 = new Coordinate("p1", -102.293, 201.12, 11.31, "MP");
+        LocalCoordinate c2 = new LocalCoordinate("p2", 111.941, 209.99, -10.41, "MP");
+        LocalCoordinate c1 = new LocalCoordinate("p1", -102.293, 201.12, 11.31, "MP");
 
         TachyMeasurement m1 = new TachyMeasurement("p1", "p2", new TachyResponse("p2", 121.1, 99.112, 11.12));
         TachyMeasurement m2 = new TachyMeasurement("p1", "p2", new TachyResponse("p2", 122.1, 99.122, 12.12));

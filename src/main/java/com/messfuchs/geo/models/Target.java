@@ -1,6 +1,6 @@
 package com.messfuchs.geo.models;
 
-public class Target extends Coordinate{
+public class Target extends LocalCoordinate{
 
     public double reflectorHeight = 0.0;
 

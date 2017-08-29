@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class Site implements Comparable {
     public String name;
-    public CoordinateSet coordinateSet = new CoordinateSet();
+    public LocalCoordinateSet coordinateSet = new LocalCoordinateSet();
     public TachyMeasurementSet measurementSet = new TachyMeasurementSet();
 
     public Site (String name) {
@@ -15,7 +15,7 @@ public class Site implements Comparable {
         this("Unknown");
     }
 
-    public void addCoordinate(Coordinate coordinate) {
+    public void addCoordinate(LocalCoordinate coordinate) {
         this.coordinateSet.add(coordinate);
     }
 
@@ -42,11 +42,11 @@ public class Site implements Comparable {
         this.name = name;
     }
 
-    public Set<Coordinate> getCoordinateSet() {
+    public Set<LocalCoordinate> getCoordinateSet() {
         return coordinateSet.getSet();
     }
 
-    public void setCoordinateSet(CoordinateSet coordinateSet) {
+    public void setCoordinateSet(LocalCoordinateSet coordinateSet) {
         this.coordinateSet = coordinateSet;
     }
 

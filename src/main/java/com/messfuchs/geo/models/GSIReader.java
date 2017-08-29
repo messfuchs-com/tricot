@@ -92,7 +92,7 @@ public class GSIReader extends DataReader {
 
 
     @Override
-    public Coordinate parseCoordinateLine(String line) {
+    public LocalCoordinate parseCoordinateLine(String line) {
         Matcher m = Pattern.compile(REGEX_WI16_LINE11).matcher(line);
         if (m.find()) {
 
@@ -100,7 +100,7 @@ public class GSIReader extends DataReader {
             String gsiLine = m.group();
             m = Pattern.compile(REGEX_WI16_WIWORD).matcher(gsiLine);
 
-            Coordinate coordinate = new Coordinate();
+            LocalCoordinate coordinate = new LocalCoordinate();
             coordinate.setName(contextInfo);
             while (m.find()) {
                 String wiCode = m.group("wiCode").replace(".", "");

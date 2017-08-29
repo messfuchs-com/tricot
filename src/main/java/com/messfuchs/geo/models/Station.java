@@ -1,6 +1,6 @@
 package com.messfuchs.geo.models;
 
-public class Station extends Coordinate {
+public class Station extends LocalCoordinate {
 
     public double instrumentalHeight = 0.0;
     private TachyMeasurementSet measurementSet = new TachyMeasurementSet();

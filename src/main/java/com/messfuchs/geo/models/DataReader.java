@@ -13,7 +13,7 @@ public abstract class DataReader extends DataStreamer implements Readable {
 
     public abstract TachyResponse parseResponseLine(String line);
 
-    public abstract Coordinate parseCoordinateLine(String line);
+    public abstract LocalCoordinate parseCoordinateLine(String line);
 
     public abstract Site parseSiteLine(String line);
 
@@ -54,7 +54,7 @@ public abstract class DataReader extends DataStreamer implements Readable {
                     continue;
                 }
 
-                // Define TachyMeasurement & Coordinate
+                // Define TachyMeasurement & LocalCoordinate
 
                 TachyResponse tachyResponse = parseResponseLine(line);
                 if (tachyResponse != null) {
@@ -70,7 +70,7 @@ public abstract class DataReader extends DataStreamer implements Readable {
                     continue;
                 }
 
-                Coordinate coordinate = parseCoordinateLine(line);
+                LocalCoordinate coordinate = parseCoordinateLine(line);
                 if (coordinate != null) {
                     site.addCoordinate(coordinate);
                     continue;
