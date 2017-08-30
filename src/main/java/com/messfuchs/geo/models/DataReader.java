@@ -72,7 +72,7 @@ public abstract class DataReader extends DataStreamer implements Readable {
 
                 LocalCoordinate coordinate = parseCoordinateLine(line);
                 if (coordinate != null) {
-                    site.addCoordinate(coordinate);
+                    site.addLocalCoordinate(coordinate);
                     continue;
                 }
             }

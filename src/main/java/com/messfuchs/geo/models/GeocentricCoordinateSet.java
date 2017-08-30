@@ -13,18 +13,18 @@ import java.util.TreeSet;
  *
  * @author jurgen
  */
-public class LocalCoordinateSet {
+public class GeocentricCoordinateSet {
+    
+    private Set<GeocentricCoordinate> set = new TreeSet<>(new CompareSorter());
 
-    private Set<LocalCoordinate> set = new TreeSet<>(new CompareSorter());
-
-    public boolean add(LocalCoordinate coordinate) {
+    public boolean add(GeocentricCoordinate coordinate) {
         return this.set.add(coordinate);
     }
 
-    public LocalCoordinate findLocalCoordinatebyName(String name) {
-        Iterator<LocalCoordinate> iterator = set.iterator();
+    public GeocentricCoordinate findGeocentricCoordinatebyName(String name) {
+        Iterator<GeocentricCoordinate> iterator = set.iterator();
         while(iterator.hasNext()) {
-            LocalCoordinate coordinate = iterator.next();
+            GeocentricCoordinate coordinate = iterator.next();
             if (coordinate.getName().equals(name)) {
                 return coordinate;
             }
@@ -36,7 +36,7 @@ public class LocalCoordinateSet {
         return this.getSet().size();
     }
 
-    public Set<LocalCoordinate> getSet() {
+    public Set<GeocentricCoordinate> getSet() {
         return set;
     }
 }

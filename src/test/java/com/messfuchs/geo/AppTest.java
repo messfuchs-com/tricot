@@ -55,8 +55,8 @@ public class AppTest
         TachyMeasurement m5 = new TachyMeasurement("p3", "p2", new TachyResponse("p2", 125.1, 99.152, 15.12));
         TachyMeasurement m6 = new TachyMeasurement("p3", "p2", new TachyResponse("p2", 126.1, 99.162, 16.12));
 
-        s.addCoordinate(c1);
-        s.addCoordinate(c2);
+        s.addLocalCoordinate(c1);
+        s.addLocalCoordinate(c2);
 
         s.addMeasurement(m1);
         s.addMeasurement(m2);

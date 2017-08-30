@@ -9,6 +9,8 @@
 
   <name>tricot</name>
   <url>http://maven.apache.org</url>
+  
+  <organization>Messfuchs</organization>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

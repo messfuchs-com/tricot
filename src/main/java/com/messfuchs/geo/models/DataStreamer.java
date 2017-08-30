@@ -27,7 +27,7 @@ public class DataStreamer {
         this.initSite(siteName);
         for (Site site: siteSet) {
             if (site.getName() == siteName) {
-                site.addCoordinate(coordinate);
+                site.addLocalCoordinate(coordinate);
                 continue;
             }
         }
@@ -50,7 +50,7 @@ public class DataStreamer {
         f.format("%15s | %13s | %14s\n", "Site", "# Coordinates", "# Measurements");
         s.append(" ---------------+---------------+---------------\n");
         for (Site site: this.siteSet) {
-            f.format("%15s | %13d | %14d\n", site.name, site.coordinateSet.size(), site.measurementSet.size());
+            f.format("%15s | %13d | %14d\n", site.name, site.localCoordinateSet.size(), site.measurementSet.size());
         }
         return s.toString();
     }

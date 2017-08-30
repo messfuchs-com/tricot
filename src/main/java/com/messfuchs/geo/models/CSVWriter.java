@@ -32,7 +32,7 @@ public class CSVWriter extends DataWriter {
     public String writeDataCoordinates() {
         StringBuilder s = new StringBuilder("\"PNR\";\"RW\";\"HW\";\"H\";\"CODE\";");
         for (Site site: this.siteSet) {
-            for (LocalCoordinate coordinate : site.getCoordinateSet()) {
+            for (LocalCoordinate coordinate : site.getLocalCoordinateSet()) {
                 s.append("\n");
                 s.append(this.quote + coordinate.getName() + this.quote + this.delimiter);
                 s.append(coordinate.getEast().toString() + this.delimiter);
