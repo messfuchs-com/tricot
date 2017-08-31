@@ -23,6 +23,10 @@ public class Site implements Comparable {
     public void addGeocentricCoordinate(GeocentricCoordinate coordinate) {
         this.geocentricCoordinateSet.add(coordinate);
     }
+    
+    public void addGeocentricCoordinate(String name, Double x, Double y, Double z) {
+        this.geocentricCoordinateSet.add(new GeocentricCoordinate(name, x, y, z));
+    }
 
     public void addMeasurement(TachyMeasurement measurement) {
         this.measurementSet.add(measurement);

@@ -10,7 +10,7 @@ package com.messfuchs.geo.models;
  * @author jurgen
  */
 public class GeocentricCoordinate implements Comparable {
-    public Double x,y,z;
+    public Double x,y,z, lat, lon, elev = 0.0, undul = 0.0, height= 0.0;
     public String name, code;
    
     public GeocentricCoordinate(String name, Double x, Double y, Double z, String code) {
