@@ -76,23 +76,34 @@ public class Site implements Comparable {
         this.geocentricCoordinateSet = geocentricCoordinateSet;
     }
     
-    public String getCoordinatePairs() {
+    public java.util.ArrayList<CoordinatePair> getCoordinatePairs() {
         java.lang.StringBuilder s = new java.lang.StringBuilder();
         java.util.Formatter f = new java.util.Formatter(s);
-        CoordinatePair cp = new CoordinatePair();
+        
+        java.util.ArrayList<CoordinatePair> arrayListCoordinatePair = new java.util.ArrayList<>();
         
         for (LocalCoordinate local: this.getLocalCoordinateSet()) {
             for (GeocentricCoordinate geocentric: this.getGeocentricCoordinateSet()) {
                 if (!local.getName().equals(geocentric.getName())) continue;
+                
+                if (local.getHeight() == null) {
+                    local.setHeight(geocentric.elev);
+                }
+                
+                arrayListCoordinatePair.add(
+                        new CoordinatePair(local, geocentric)
+                );
 
-                f.format("%s;%.3f;%.3f;%.3f;%.3f;%.3f,%.3f", 
+                f.format("%s;%.3f;%.3f;%.3f;%.3f;%.3f;%.3f\n", 
                         local.getName(),
                         geocentric.getX(), geocentric.getY(), geocentric.getZ(),
                         local.getEast(), local.getNorth(), local.getHeight()
                 );
             }
         }
-        return s.toString();
+        
+        System.out.println(s.toString());
+        return arrayListCoordinatePair;
     }
     
 }

@@ -27,6 +27,12 @@ public class CoordinatePair implements Comparable {
     private GeocentricCoordinate geocentric;
     private String name;
     
+    public CoordinatePair(LocalCoordinate local, GeocentricCoordinate geocentric) {
+        this.local = local;
+        this.geocentric = geocentric;
+        this.name = local.getName() + " :: " + geocentric.getName();
+    }
+    
     @Override
     public String getCompareString() {return this.getName(); }
     

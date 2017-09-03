@@ -37,7 +37,7 @@ public class LocalCoordinate implements  Comparable {
     }
 
     public LocalCoordinate(String name, Double east, Double north) {
-        this(name, east, north, 0.0);
+        this(name, east, north, null);
     }
 
     public LocalCoordinate(Double east, Double north, Double height) {
@@ -45,7 +45,7 @@ public class LocalCoordinate implements  Comparable {
     }
 
     public LocalCoordinate(Double east, Double north) {
-        this(east, north, 0.0);
+        this(east, north, null);
     }
 
     public LocalCoordinate(String name) {

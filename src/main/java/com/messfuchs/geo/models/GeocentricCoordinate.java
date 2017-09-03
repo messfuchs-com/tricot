@@ -10,15 +10,20 @@ package com.messfuchs.geo.models;
  * @author jurgen
  */
 public class GeocentricCoordinate implements Comparable {
-    public Double x,y,z, lat, lon, elev = 0.0, undul = 0.0, height= 0.0;
+    public Double x,y,z, lat, lon, elev, undul, height;
     public String name, code;
    
-    public GeocentricCoordinate(String name, Double x, Double y, Double z, String code) {
+    public GeocentricCoordinate(String name, Double x, Double y, Double z, String code, Double elev) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.z = z;
         this.code = code;
+        this.elev = elev;
+    }
+    
+    public GeocentricCoordinate(String name, Double x, Double y, Double z, Double elev) {
+        this(name, x, y, z, null, elev);
     }
 
     public GeocentricCoordinate(String name, Double x, Double y, Double z) {
