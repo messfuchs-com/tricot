@@ -129,11 +129,17 @@ public class BEVMerger {
         }
     }
     
-    public void convert() throws IOException {
+    public String convert() throws IOException {
         this.convertETRS();
         this.convertMGI();
+        String resultText = "";
+        int identicalPoints = 0;
         
         // Update Local Height
+        if (this.site.getCoordinatePairs().isEmpty()) {
+            resultText = "No valid data found";
+            return resultText;
+        }
         
         // thx to https://examples.javacodegeeks.com/core-java/apache/commons/csv-commons/writeread-csv-files-with-apache-commons-csv-example/
         
@@ -161,8 +167,9 @@ public class BEVMerger {
                 coordinateRecord.add(cp.getLocal().getNorth());
                 coordinateRecord.add(this.parseDoubleMM(cp.getLocal().getHeight()));
                 csvFilePrinter.printRecord(coordinateRecord);
+                identicalPoints++;
             }
-            
+            resultText = "Merged " + identicalPoints + " identical Points";
             System.out.println("CSV file was created successfully !!!");
          
         } catch (Exception e) {
@@ -178,5 +185,6 @@ public class BEVMerger {
                 e.printStackTrace();
             }
         }  
+        return resultText;
     }
 }

@@ -53,6 +53,17 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtOutMerged = new javax.swing.JTextField();
         btnOutMerged = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        lblStatus = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mnInMGI = new javax.swing.JMenuItem();
+        mnInETRS = new javax.swing.JMenuItem();
+        mnOut = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        mnMerge = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         fcInMGI.setDialogTitle("BEV In MGI");
         fcInMGI.setToolTipText("Choose BEV File containing MGI data");
@@ -61,9 +72,22 @@ public class BEVMergerUI extends javax.swing.JFrame {
 
         jLabel1.setText("BEV MGI File:");
 
-        txtInMGI.setText("/home/jurgen/Documents/Arbeit/Landmark/Kunden/Fankhauser/20170824-Trafo/identpunkte/0004769401_200_PUNKTART_EP.csv");
+        txtInMGI.setText("0000000000_000_PUNKTART_EP_MGI.csv");
+        txtInMGI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtInMGIActionPerformed(evt);
+            }
+        });
 
         btnInMGI.setText("...");
+        btnInMGI.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInMGIMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInMGIMouseExited(evt);
+            }
+        });
         btnInMGI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInMGIActionPerformed(evt);
@@ -72,7 +96,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
 
         jLabel2.setText("BEV ETRS File:");
 
-        txtInETRS.setText("/home/jurgen/Documents/Arbeit/Landmark/Kunden/Fankhauser/20170824-Trafo/identpunkte/0004769401_100_PUNKTART_EP.csv");
+        txtInETRS.setText("0000000000_000_PUNKTART_EP_ETRS.csv");
         txtInETRS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtInETRSActionPerformed(evt);
@@ -80,6 +104,14 @@ public class BEVMergerUI extends javax.swing.JFrame {
         });
 
         btnInETRS.setText("...");
+        btnInETRS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInETRSMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInETRSMouseExited(evt);
+            }
+        });
         btnInETRS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInETRSActionPerformed(evt);
@@ -87,6 +119,14 @@ public class BEVMergerUI extends javax.swing.JFrame {
         });
 
         btnMerge.setText("Merge");
+        btnMerge.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMergeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMergeMouseExited(evt);
+            }
+        });
         btnMerge.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMergeActionPerformed(evt);
@@ -95,30 +135,89 @@ public class BEVMergerUI extends javax.swing.JFrame {
 
         jLabel3.setText("OUT File:");
 
-        txtOutMerged.setText("/home/jurgen/Documents/Arbeit/Landmark/Kunden/Fankhauser/20170824-Trafo/identpunkte/0004769401_PUNKTART_EP_TEST.csv");
+        txtOutMerged.setText("0000000000_000_PUNKTART_EP_MERGE.csv");
         txtOutMerged.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtOutMergedActionPerformed(evt);
             }
         });
 
-        btnOutMerged.setText("jButton4");
+        btnOutMerged.setText("...");
+        btnOutMerged.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnOutMergedMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnOutMergedMouseExited(evt);
+            }
+        });
         btnOutMerged.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOutMergedActionPerformed(evt);
             }
         });
 
+        lblStatus.setText("BEV Merger UI");
+        lblStatus.setToolTipText("Status Bar");
+        lblStatus.setFocusable(false);
+
+        jMenu1.setText("Action");
+
+        mnInMGI.setText("Choose Input MGI File");
+        mnInMGI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnInMGIActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnInMGI);
+
+        mnInETRS.setText("Choose Input ETRS File");
+        mnInETRS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnInETRSActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnInETRS);
+
+        mnOut.setText("Choose Output File");
+        mnOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnOutActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnOut);
+        jMenu1.add(jSeparator2);
+
+        mnMerge.setText("Merge Input Files");
+        mnMerge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnMergeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnMerge);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Help");
+
+        jMenuItem1.setText("not implemented jet, sorry :(");
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnMerge, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1)
+                    .addComponent(btnMerge, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -130,18 +229,18 @@ public class BEVMergerUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtInETRS)
-                                    .addComponent(txtOutMerged))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtOutMerged, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnInMGI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInETRS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnOutMerged, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnInETRS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnInMGI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnOutMerged, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtInMGI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,9 +255,12 @@ public class BEVMergerUI extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtOutMerged, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOutMerged))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnMerge)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblStatus))
         );
 
         pack();
@@ -174,55 +276,87 @@ public class BEVMergerUI extends javax.swing.JFrame {
 
     private void btnMergeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMergeActionPerformed
         // TODO add your handling code here:
-        
-        BEVMerger merger = new BEVMerger(
-                this.txtInMGI.getText(), 
-                this.txtInETRS.getText(),
-                this.txtOutMerged.getText()
-        );
-        
-        try {
-            merger.convert();
-        } catch (java.io.IOException e)  {
-            e.printStackTrace();
-            System.out.println("There was an Error");
-        }
+        this.actionMerge();
     }//GEN-LAST:event_btnMergeActionPerformed
 
     private void btnInMGIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInMGIActionPerformed
         // TODO add your handling code here:
-        int returnVal = this.jFileChooser1.showOpenDialog(this);
-        if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File file = this.jFileChooser1.getSelectedFile();
-            this.txtInMGI.setText(file.getAbsolutePath());
-        
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
+        this.actionChooseMGI();
     }//GEN-LAST:event_btnInMGIActionPerformed
 
     private void btnInETRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInETRSActionPerformed
         // TODO add your handling code here:
-        int returnVal = this.jFileChooser1.showOpenDialog(this);
-        if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File file = this.jFileChooser1.getSelectedFile();
-            this.txtInETRS.setText(file.getAbsolutePath());
-        
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
+        this.actionChooseETRS();
     }//GEN-LAST:event_btnInETRSActionPerformed
 
     private void btnOutMergedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOutMergedActionPerformed
         // TODO add your handling code here:
-        int returnVal = this.jFileChooser1.showOpenDialog(this);
-        if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File file = this.jFileChooser1.getSelectedFile();
-            this.txtOutMerged.setText(file.getAbsolutePath());
-        } else {
-            System.out.println("File access cancelled by user.");
-        }         
+        this.actionChooseOut();
     }//GEN-LAST:event_btnOutMergedActionPerformed
+
+    private void txtInMGIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInMGIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtInMGIActionPerformed
+
+    private void btnInMGIMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMGIMouseEntered
+        // TODO add your handling code here:
+        this.lblStatus.setText("Choose MGI file");
+    }//GEN-LAST:event_btnInMGIMouseEntered
+
+    private void btnInMGIMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMGIMouseExited
+        // TODO add your handling code here:
+        this.lblStatus.setText("");
+    }//GEN-LAST:event_btnInMGIMouseExited
+
+    private void btnInETRSMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInETRSMouseEntered
+        // TODO add your handling code here:
+        this.lblStatus.setText("Choose ETRS file");
+    }//GEN-LAST:event_btnInETRSMouseEntered
+
+    private void btnInETRSMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInETRSMouseExited
+        // TODO add your handling code here:
+        this.lblStatus.setText("");
+    }//GEN-LAST:event_btnInETRSMouseExited
+
+    private void btnMergeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMergeMouseEntered
+        // TODO add your handling code here:
+        this.lblStatus.setText("Merge MGI and ETRS files");
+    }//GEN-LAST:event_btnMergeMouseEntered
+
+    private void btnMergeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMergeMouseExited
+        // TODO add your handling code here:
+        this.lblStatus.setText("");
+    }//GEN-LAST:event_btnMergeMouseExited
+
+    private void btnOutMergedMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOutMergedMouseEntered
+        // TODO add your handling code here:
+        this.lblStatus.setText("Choose Output file");
+    }//GEN-LAST:event_btnOutMergedMouseEntered
+
+    private void btnOutMergedMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOutMergedMouseExited
+        // TODO add your handling code here:
+        this.lblStatus.setText("");
+    }//GEN-LAST:event_btnOutMergedMouseExited
+
+    private void mnInETRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnInETRSActionPerformed
+        // TODO add your handling code here:
+        this.actionChooseETRS();
+    }//GEN-LAST:event_mnInETRSActionPerformed
+
+    private void mnInMGIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnInMGIActionPerformed
+        // TODO add your handling code here:
+        this.actionChooseMGI();
+    }//GEN-LAST:event_mnInMGIActionPerformed
+
+    private void mnOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnOutActionPerformed
+        // TODO add your handling code here:
+        this.actionChooseOut();
+    }//GEN-LAST:event_mnOutActionPerformed
+
+    private void mnMergeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnMergeActionPerformed
+        // TODO add your handling code here:
+        this.actionMerge();
+    }//GEN-LAST:event_mnMergeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,6 +393,52 @@ public class BEVMergerUI extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void actionChooseMGI() {
+        int returnVal = this.jFileChooser1.showOpenDialog(this);
+        if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File file = this.jFileChooser1.getSelectedFile();
+            this.txtInMGI.setText(file.getAbsolutePath());
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }
+    
+    public void actionChooseETRS() {
+        int returnVal = this.jFileChooser1.showOpenDialog(this);
+        if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File file = this.jFileChooser1.getSelectedFile();
+            this.txtInETRS.setText(file.getAbsolutePath());
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }
+    
+    public void actionChooseOut() {
+        int returnVal = this.jFileChooser1.showOpenDialog(this);
+        if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File file = this.jFileChooser1.getSelectedFile();
+            this.txtOutMerged.setText(file.getAbsolutePath());
+        } else {
+            System.out.println("File access cancelled by user.");
+        }  
+    }
+    
+    private void actionMerge() {
+        String mergeText = "";
+        BEVMerger merger = new BEVMerger(
+                this.txtInMGI.getText(), 
+                this.txtInETRS.getText(),
+                this.txtOutMerged.getText()
+        );
+        try {
+            mergeText = merger.convert();
+        } catch (java.io.IOException e)  {
+            e.printStackTrace();
+            System.out.println("There was an Error");
+        }
+        this.lblStatus.setText(mergeText);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInETRS;
@@ -272,6 +452,17 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JMenuItem mnInETRS;
+    private javax.swing.JMenuItem mnInMGI;
+    private javax.swing.JMenuItem mnMerge;
+    private javax.swing.JMenuItem mnOut;
     private javax.swing.JTextField txtInETRS;
     private javax.swing.JTextField txtInMGI;
     private javax.swing.JTextField txtOutMerged;

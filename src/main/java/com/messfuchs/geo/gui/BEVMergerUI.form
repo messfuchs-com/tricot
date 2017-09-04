@@ -14,11 +14,69 @@
     </Component>
     <Component class="javax.swing.JFileChooser" name="jFileChooser1">
     </Component>
+    <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Action"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="mnInMGI">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Choose Input MGI File"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnInMGIActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnInETRS">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Choose Input ETRS File"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnInETRSActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnOut">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Choose Output File"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnOutActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnMerge">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Merge Input Files"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnMergeActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Help"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="not implemented jet, sorry :("/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Menu>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
   <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
@@ -37,12 +95,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="btnMerge" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jSeparator1" max="32767" attributes="0"/>
+                  <Component id="btnMerge" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -56,26 +115,26 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtInETRS" max="32767" attributes="0"/>
-                                  <Component id="txtOutMerged" max="32767" attributes="0"/>
+                                  <Component id="txtOutMerged" pref="303" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnInMGI" max="32767" attributes="0"/>
-                          <Component id="btnInETRS" max="32767" attributes="0"/>
-                          <Component id="btnOutMerged" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnInETRS" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btnInMGI" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btnOutMerged" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="lblStatus" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtInMGI" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -93,9 +152,12 @@
                   <Component id="txtOutMerged" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnOutMerged" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnMerge" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator1" min="-2" pref="4" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -108,14 +170,19 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtInMGI">
       <Properties>
-        <Property name="text" type="java.lang.String" value="/home/jurgen/Documents/Arbeit/Landmark/Kunden/Fankhauser/20170824-Trafo/identpunkte/0004769401_200_PUNKTART_EP.csv"/>
+        <Property name="text" type="java.lang.String" value="0000000000_000_PUNKTART_EP_MGI.csv"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtInMGIActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnInMGI">
       <Properties>
         <Property name="text" type="java.lang.String" value="..."/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInMGIMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInMGIMouseExited"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInMGIActionPerformed"/>
       </Events>
     </Component>
@@ -126,7 +193,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtInETRS">
       <Properties>
-        <Property name="text" type="java.lang.String" value="/home/jurgen/Documents/Arbeit/Landmark/Kunden/Fankhauser/20170824-Trafo/identpunkte/0004769401_100_PUNKTART_EP.csv"/>
+        <Property name="text" type="java.lang.String" value="0000000000_000_PUNKTART_EP_ETRS.csv"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtInETRSActionPerformed"/>
@@ -137,6 +204,8 @@
         <Property name="text" type="java.lang.String" value="..."/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInETRSMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInETRSMouseExited"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInETRSActionPerformed"/>
       </Events>
     </Component>
@@ -145,6 +214,8 @@
         <Property name="text" type="java.lang.String" value="Merge"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMergeMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMergeMouseExited"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMergeActionPerformed"/>
       </Events>
     </Component>
@@ -155,7 +226,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtOutMerged">
       <Properties>
-        <Property name="text" type="java.lang.String" value="/home/jurgen/Documents/Arbeit/Landmark/Kunden/Fankhauser/20170824-Trafo/identpunkte/0004769401_PUNKTART_EP_TEST.csv"/>
+        <Property name="text" type="java.lang.String" value="0000000000_000_PUNKTART_EP_MERGE.csv"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOutMergedActionPerformed"/>
@@ -163,11 +234,22 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnOutMerged">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton4"/>
+        <Property name="text" type="java.lang.String" value="..."/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnOutMergedMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnOutMergedMouseExited"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOutMergedActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="BEV Merger UI"/>
+        <Property name="toolTipText" type="java.lang.String" value="Status Bar"/>
+        <Property name="focusable" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
