@@ -24,6 +24,7 @@ com/messfuchs/geo/models/GSIWriter.class
 com/messfuchs/geo/models/GeocentricCoordinateSet.class
 com/messfuchs/geo/gui/BEVMergerUI$14.class
 com/messfuchs/geo/models/CoordinatePairSet.class
+com/messfuchs/geo/gui/BEVMergerUI$17.class
 com/messfuchs/geo/gui/BEVMergerUI$5.class
 com/messfuchs/geo/gui/TricotUI$1.class
 com/messfuchs/geo/models/TachyMeasurementSet.class

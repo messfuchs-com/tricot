@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<project name="maven-antrun-" default="main"  >
-<target name="main">
-  <echo>Adding shell Files</echo>
-  <copy file="/home/jurgen/Documents/Projects/tricot/src/main/resources/BEV-Merger.sh" tofile="/home/jurgen/Documents/Projects/tricot/target/BEV-Merger.sh"/>
-</target>
-</project>
