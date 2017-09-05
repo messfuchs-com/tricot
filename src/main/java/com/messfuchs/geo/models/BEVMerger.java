@@ -24,6 +24,13 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Locale;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  *
  * @author jurgen
@@ -40,7 +47,8 @@ public class BEVMerger {
     private Site site;
     
     private static final String NEW_LINE_SEPARATOR = "\n";
-    
+    private static final Logger LOG = LogManager.getLogger(BEVMerger.class);
+
     public BEVMerger (String inFileMGI, String inFileETRS, String outFileMerged) {
         this.inFileMGI = inFileMGI;
         this.inFileETRS = inFileETRS;
@@ -49,7 +57,8 @@ public class BEVMerger {
     }
     
     public String parseDoubleMM(Double d) {
-        Double dMM = Double.parseDouble(String.format("%.3f", d));
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
+        Double dMM = Double.parseDouble(String.format(Locale.US, "%.03f", d));
         return dMM.toString();
     }
 
@@ -83,7 +92,7 @@ public class BEVMerger {
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFileETRS);
             
             for (CSVRecord record : records) {
-                String pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER");
+                String pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + "-" + record.get("KENNZEICHEN");
                 Double geoX = Double.parseDouble(record.get("X"));
                 Double geoY = Double.parseDouble(record.get("Y"));
                 Double geoZ = Double.parseDouble(record.get("Z"));
@@ -112,7 +121,7 @@ public class BEVMerger {
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
             
             for (CSVRecord record : records) {
-                String pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER");
+                String pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + "-" + record.get("KENNZEICHEN");
                 Double east = Double.parseDouble(record.get("RECHTSWERT"));
                 Double north = Double.parseDouble(record.get("HOCHWERT"));
                 Double height = null;
@@ -160,20 +169,22 @@ public class BEVMerger {
             for (CoordinatePair cp: listCoordinatePair) {
                 java.util.List coordinateRecord = new java.util.ArrayList();
                 coordinateRecord.add(cp.getLocal().getName());
-                coordinateRecord.add(cp.getGeocentric().getX());
-                coordinateRecord.add(cp.getGeocentric().getY());
-                coordinateRecord.add(cp.getGeocentric().getZ());
-                coordinateRecord.add(cp.getLocal().getEast());
-                coordinateRecord.add(cp.getLocal().getNorth());
+                coordinateRecord.add(this.parseDoubleMM(cp.getGeocentric().getX()));
+                coordinateRecord.add(this.parseDoubleMM(cp.getGeocentric().getY()));
+                coordinateRecord.add(this.parseDoubleMM(cp.getGeocentric().getZ()));
+                coordinateRecord.add(this.parseDoubleMM(cp.getLocal().getEast()));
+                coordinateRecord.add(this.parseDoubleMM(cp.getLocal().getNorth()));
                 coordinateRecord.add(this.parseDoubleMM(cp.getLocal().getHeight()));
                 csvFilePrinter.printRecord(coordinateRecord);
                 identicalPoints++;
+                LOG.debug("Added " + cp.toString());
             }
             resultText = "Merged " + identicalPoints + " identical Points";
-            System.out.println("CSV file was created successfully !!!");
+
+            LOG.info("CSV file was created successfully !!!");
          
         } catch (Exception e) {
-             System.out.println("Error while Writing CSV");
+             LOG.error("Error while Writing CSV");
              e.printStackTrace();
         } finally {
             try {
@@ -181,7 +192,7 @@ public class BEVMerger {
                 fileWriter.close();
                 csvFilePrinter.close();
             } catch (IOException e) {
-                System.out.println("Error while flushing/closing fileWriter/csvPrinter");
+                LOG.error("Error while flushing/closing fileWriter/csvPrinter");
                 e.printStackTrace();
             }
         }  

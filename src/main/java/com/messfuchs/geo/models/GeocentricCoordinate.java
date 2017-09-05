@@ -21,6 +21,11 @@ public class GeocentricCoordinate implements Comparable {
         this.code = code;
         this.elev = elev;
     }
+
+    @Override
+    public String toString() {
+        return "GeocentricCoordinate{" + "x=" + x + ", y=" + y + ", z=" + z + ", elev=" + elev + ", undul=" + undul + ", height=" + height + ", name=" + name + ", code=" + code + '}';
+    }
     
     public GeocentricCoordinate(String name, Double x, Double y, Double z, Double elev) {
         this(name, x, y, z, null, elev);
@@ -94,8 +99,6 @@ public class GeocentricCoordinate implements Comparable {
         this.code = code;
     }
     
-    
-
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;

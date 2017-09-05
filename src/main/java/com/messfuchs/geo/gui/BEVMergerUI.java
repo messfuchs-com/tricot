@@ -16,12 +16,17 @@
 package com.messfuchs.geo.gui;
 
 import com.messfuchs.geo.models.BEVMerger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 /**
  *
  * @author jurgen
  */
 public class BEVMergerUI extends javax.swing.JFrame {
+    
+    private static final Logger LOG = LogManager.getLogger(BEVMerger.class);
 
     /**
      * Creates new form BEVPairUI
@@ -62,6 +67,8 @@ public class BEVMergerUI extends javax.swing.JFrame {
         mnOut = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mnMerge = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -195,6 +202,15 @@ public class BEVMergerUI extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mnMerge);
+        jMenu1.add(jSeparator3);
+
+        jMenuItem2.setText("Quit");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -358,6 +374,11 @@ public class BEVMergerUI extends javax.swing.JFrame {
         this.actionMerge();
     }//GEN-LAST:event_mnMergeActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -400,7 +421,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
             java.io.File file = this.jFileChooser1.getSelectedFile();
             this.txtInMGI.setText(file.getAbsolutePath());
         } else {
-            System.out.println("File access cancelled by user.");
+            LOG.warn("File access cancelled by user.");
         }
     }
     
@@ -410,7 +431,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
             java.io.File file = this.jFileChooser1.getSelectedFile();
             this.txtInETRS.setText(file.getAbsolutePath());
         } else {
-            System.out.println("File access cancelled by user.");
+            LOG.warn("File access cancelled by user.");
         }
     }
     
@@ -420,7 +441,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
             java.io.File file = this.jFileChooser1.getSelectedFile();
             this.txtOutMerged.setText(file.getAbsolutePath());
         } else {
-            System.out.println("File access cancelled by user.");
+            LOG.warn("File access cancelled by user.");
         }  
     }
     
@@ -435,7 +456,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
             mergeText = merger.convert();
         } catch (java.io.IOException e)  {
             e.printStackTrace();
-            System.out.println("There was an Error");
+            LOG.error("There was an Error");
         }
         this.lblStatus.setText(mergeText);
     }
@@ -456,8 +477,10 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JMenuItem mnInETRS;
     private javax.swing.JMenuItem mnInMGI;
