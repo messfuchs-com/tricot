@@ -19,6 +19,8 @@ import com.messfuchs.geo.models.BEVMerger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 /**
  *
@@ -457,8 +459,21 @@ public class BEVMergerUI extends javax.swing.JFrame {
         } catch (java.io.IOException e)  {
             e.printStackTrace();
             LOG.error("There was an Error");
+        } catch (java.lang.IllegalArgumentException e) {
+            int i = e.toString().indexOf("Mapping for");
+            if (i >= 0) {
+                int j = e.toString().indexOf("not found, expected");
+                this.lblStatus.setText(e.toString().substring(i, j+9) + ", check your input files");
+                showMessageDialog(null, e.toString().substring(i, j+9) + ", check your input files");
+            } else {
+                this.lblStatus.setText("Error while converting");
+                showMessageDialog(null, e);
+            } 
         }
         this.lblStatus.setText(mergeText);
+        if (mergeText.length() > 0) {
+            showMessageDialog(null, mergeText);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

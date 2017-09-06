@@ -23,6 +23,7 @@ import java.io.Reader;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
+import java.lang.IllegalArgumentException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Locale;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
 
 /**
  *
@@ -50,8 +52,7 @@ public class BEVMerger {
     private static final Logger LOG = LogManager.getLogger(BEVMerger.class);
 
     public BEVMerger (String inFileMGI, String inFileETRS, String outFileMerged) {
-        this.inFileMGI = inFileMGI;
-        this.inFileETRS = inFileETRS;
+        this.inFileMGI = inFileMGI;    this.inFileETRS = inFileETRS;
         this.outFileMerged = outFileMerged;
         this.site = new Site("BEV Merged");
     }
@@ -139,14 +140,28 @@ public class BEVMerger {
     }
     
     public String convert() throws IOException {
-        this.convertETRS();
-        this.convertMGI();
+        
         String resultText = "";
         int identicalPoints = 0;
+
+        try {
+            this.convertMGI();
+        } catch (java.lang.IllegalArgumentException e) {
+            LOG.error("Error with MGI File: " + e.toString());
+            throw e;
+        }
+        
+        try {
+            this.convertETRS();
+        } catch (java.lang.IllegalArgumentException e) {
+            LOG.error("Error with ETRS File: " + e.toString());
+            throw e;
+        }
         
         // Update Local Height
         if (this.site.getCoordinatePairs().isEmpty()) {
             resultText = "No valid data found";
+            LOG.error("No valid data found");
             return resultText;
         }
         
