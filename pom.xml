@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>tricot</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/messfuchs-com/tricot</url>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,12 +85,18 @@
           </filesets>
         </configuration>
       </plugin>
-
+      
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
         <version>0.12</version>
         <configuration>
+          <!-- repository identification -->
+          <repositoryName>tricot</repositoryName>
+          <repositoryOwner>messfuchs-com</repositoryOwner>
+
+          <server>github</server>
+
           <message>Creating site for ${project.version}</message>
         </configuration>
         <executions>
@@ -101,6 +107,15 @@
             <phase>site</phase>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.6</version>
+        <configuration>
+          <locales>en,de</locales>
+        </configuration>
       </plugin>
       
       <plugin>
