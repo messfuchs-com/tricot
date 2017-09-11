@@ -39,7 +39,11 @@ import java.text.NumberFormat;
  */
 
 enum outHeaderBEV {
-        POINTNAME, ECEF_X, ECEF_Y, ECEF_Z, MGI_AUTO_EAST, MGI_AUTO_NORTH, LOCAL_HEIGHT
+    POINTNAME, ECEF_X, ECEF_Y, ECEF_Z, MGI_AUTO_EAST, MGI_AUTO_NORTH, LOCAL_HEIGHT
+}
+
+enum PointType {
+    TP, EP
 }
 
 
@@ -58,9 +62,24 @@ public class BEVMerger {
     }
     
     public String parseDoubleMM(Double d) {
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
-        Double dMM = Double.parseDouble(String.format(Locale.US, "%.03f", d));
-        return dMM.toString();
+        // NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
+        Double dMM = null;
+        try {
+            dMM =  Double.parseDouble(String.format(Locale.US, "%.03f", d));
+        } finally {
+            if (dMM == null) {
+                return "";
+            }
+            return dMM.toString();
+        }
+    }
+    
+    public Double parseDouble(String s) {
+        if (s == null || s.isEmpty() || s.equals("")) {
+            return null;
+        } else {
+            return Double.parseDouble(s);
+        }
     }
 
     public String getInFileMGI() {
@@ -93,23 +112,36 @@ public class BEVMerger {
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFileETRS);
             
             for (CSVRecord record : records) {
-                String pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + "-" + record.get("KENNZEICHEN");
-                Double geoX = Double.parseDouble(record.get("X"));
-                Double geoY = Double.parseDouble(record.get("Y"));
-                Double geoZ = Double.parseDouble(record.get("Z"));
-                Double east = Double.parseDouble(record.get("RW"));
-                Double north = Double.parseDouble(record.get("HW"));
-                Double height = Double.parseDouble(record.get("HOEHE"));
-                Double undul_grs80 = Double.parseDouble(record.get("UNDULATION_GRS80"));
-                Double undul_bessel = Double.parseDouble(record.get("UNDULATION_BESSEL"));
-                Double elev = height + undul_grs80 + undul_bessel;
-                
+                String pointName = null;
+                String pointType = record.get("PUNKTTYP");
+                if (pointType.equals("TP")) {
+                    pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + record.get("KENNZEICHEN");
+                } else if (pointType.equals("EP")) {
+                    pointName = record.get("PUNKTNUMMER") + "-" + record.get("OeK50_BMN_NR") + record.get("KENNZEICHEN");
+                }
+                LOG.debug("Parsing ETRS '" + pointName + "'");
+                Double geoX = this.parseDouble(record.get("X"));
+                Double geoY = this.parseDouble(record.get("Y"));
+                Double geoZ = this.parseDouble(record.get("Z"));
+                // Double east = Double.parseDouble(record.get("RW"));
+                // Double north = Double.parseDouble(record.get("HW"));
+                Double height = this.parseDouble(record.get("HOEHE"));
+                Double undul_grs80 = this.parseDouble(record.get("UNDULATION_GRS80"));
+                Double undul_bessel = this.parseDouble(record.get("UNDULATION_BESSEL"));
+                Double elev = null;
+                if ( height != null && undul_grs80 != null && undul_bessel != null && !height.isNaN() && !undul_grs80.isNaN() && !undul_bessel.isNaN() ) {
+                    LOG.debug("Height: " + height);
+                    LOG.debug("N_GRS80: " + undul_grs80);
+                    LOG.debug("N_BESSEL: " + undul_bessel);
+                    elev = height + undul_grs80 + undul_bessel;
+                } 
                 GeocentricCoordinate tempCoord = new GeocentricCoordinate(
                         pointName, geoX, geoY, geoZ, elev
                 );
                 
                 this.site.addGeocentricCoordinate(tempCoord);
- 
+                 LOG.debug("Added ETRS '" + tempCoord.name + "'");
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -122,16 +154,24 @@ public class BEVMerger {
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
             
             for (CSVRecord record : records) {
-                String pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + "-" + record.get("KENNZEICHEN");
+                String pointName = null;
+                String pointType = record.get("PUNKTTYP");
+                if (pointType.equals("TP")) {
+                    pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + record.get("KENNZEICHEN");
+                } else if (pointType.equals("EP")) {
+                    pointName = record.get("PUNKTNUMMER") + "-" + record.get("OeK50_BMN_NR") + record.get("KENNZEICHEN");
+                }
+                LOG.debug("Parsing MGI '" + pointName + "'");
                 Double east = Double.parseDouble(record.get("RECHTSWERT"));
                 Double north = Double.parseDouble(record.get("HOCHWERT"));
-                Double height = null;
+                Double height = this.parseDouble(record.get("HOEHE"));
                 
                 LocalCoordinate tempCoord = new LocalCoordinate(
                         pointName, east, north, height
                 );
                 
                 this.site.addLocalCoordinate(tempCoord);
+                LOG.debug("Added MGI '" + tempCoord.name + "'");
  
             }
         } catch (FileNotFoundException e) {
@@ -148,6 +188,7 @@ public class BEVMerger {
             this.convertMGI();
         } catch (java.lang.IllegalArgumentException e) {
             LOG.error("Error with MGI File: " + e.toString());
+            e.printStackTrace();
             throw e;
         }
         
@@ -155,6 +196,7 @@ public class BEVMerger {
             this.convertETRS();
         } catch (java.lang.IllegalArgumentException e) {
             LOG.error("Error with ETRS File: " + e.toString());
+            e.printStackTrace();
             throw e;
         }
         
