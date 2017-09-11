@@ -61,6 +61,10 @@ public class BEVMerger {
         this.site = new Site("BEV Merged");
     }
     
+    public int getIdenticPoints() {
+        return this.site.getCoordinatePairs().size();
+    }
+    
     public String parseDoubleMM(Double d) {
         // NumberFormat nf = NumberFormat.getNumberInstance(Locale.GERMAN);
         Double dMM = null;
