@@ -18,6 +18,8 @@ package com.messfuchs.geo.gui;
 import com.messfuchs.geo.models.BEVMerger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.Properties;
+import java.io.IOException;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -72,7 +74,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnAbout = new javax.swing.JMenuItem();
 
         fcInMGI.setDialogTitle("BEV In MGI");
         fcInMGI.setToolTipText("Choose BEV File containing MGI data");
@@ -218,8 +220,13 @@ public class BEVMergerUI extends javax.swing.JFrame {
 
         jMenu2.setText("Help");
 
-        jMenuItem1.setText("not implemented jet, sorry :(");
-        jMenu2.add(jMenuItem1);
+        mnAbout.setText("About");
+        mnAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnAboutActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnAbout);
 
         jMenuBar1.add(jMenu2);
 
@@ -381,6 +388,17 @@ public class BEVMergerUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void mnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnAboutActionPerformed
+        // TODO add your handling code here:
+        final Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("app.properties"));
+            showMessageDialog(null, "Version: " + properties.getProperty("app.version"));
+        } catch (IOException e) {
+            showMessageDialog(null, "not implemented yet :-(");
+        }
+    }//GEN-LAST:event_mnAboutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -491,12 +509,12 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JMenuItem mnAbout;
     private javax.swing.JMenuItem mnInETRS;
     private javax.swing.JMenuItem mnInMGI;
     private javax.swing.JMenuItem mnMerge;
