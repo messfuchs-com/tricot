@@ -13,13 +13,15 @@ public class GeocentricCoordinate implements Comparable {
     public Double x,y,z, lat, lon, elev, undul, height;
     public String name, code;
    
-    public GeocentricCoordinate(String name, Double x, Double y, Double z, String code, Double elev) {
+    public GeocentricCoordinate(String name, Double x, Double y, Double z, String code, Double elev, Double lat, Double lon) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.z = z;
         this.code = code;
         this.elev = elev;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     @Override
@@ -28,8 +30,9 @@ public class GeocentricCoordinate implements Comparable {
     }
     
     public GeocentricCoordinate(String name, Double x, Double y, Double z, Double elev) {
-        this(name, x, y, z, null, elev);
+        this(name, x, y, z, null, elev, null, null);
     }
+    
 
     public GeocentricCoordinate(String name, Double x, Double y, Double z) {
         this(name, x, y, z, null);

@@ -32,6 +32,8 @@ import java.util.Locale;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import com.messfuchs.geo.models.CoordinateType;
+
 
 /**
  *
@@ -51,6 +53,7 @@ public class BEVMerger {
     
     private String inFileMGI, inFileETRS, outFileMerged;
     private Site site;
+    private CoordinateType coordinateType;
     
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final Logger LOG = LogManager.getLogger(BEVMerger.class);
@@ -59,6 +62,7 @@ public class BEVMerger {
         this.inFileMGI = inFileMGI;    this.inFileETRS = inFileETRS;
         this.outFileMerged = outFileMerged;
         this.site = new Site("BEV Merged");
+        this.setCoordinateType(CoordinateType.Geocentric);
     }
     
     public int getIdenticPoints() {
@@ -76,6 +80,14 @@ public class BEVMerger {
             }
             return dMM.toString();
         }
+    }
+
+    public CoordinateType getCoordinateType() {
+        return coordinateType;
+    }
+
+    public void setCoordinateType(CoordinateType coordinateType) {
+        this.coordinateType = coordinateType;
     }
     
     public Double parseDouble(String s) {

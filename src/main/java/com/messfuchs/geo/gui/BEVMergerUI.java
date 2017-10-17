@@ -16,6 +16,8 @@
 package com.messfuchs.geo.gui;
 
 import com.messfuchs.geo.models.BEVMerger;
+import com.messfuchs.geo.models.CoordinateType;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Properties;
@@ -31,12 +33,15 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class BEVMergerUI extends javax.swing.JFrame {
     
     private static final Logger LOG = LogManager.getLogger(BEVMerger.class);
+    
+    private CoordinateType coordinateType;
 
     /**
      * Creates new form BEVPairUI
      */
     public BEVMergerUI() {
         initComponents();
+        this.coordinateType = CoordinateType.Geocentric;
     }
 
     /**
@@ -52,6 +57,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         fcInETRS = new javax.swing.JFileChooser();
         fcOutMerged = new javax.swing.JFileChooser();
         jFileChooser1 = new javax.swing.JFileChooser();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         txtInMGI = new javax.swing.JTextField();
         btnInMGI = new javax.swing.JButton();
@@ -73,6 +79,9 @@ public class BEVMergerUI extends javax.swing.JFrame {
         mnMerge = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jRadioButtonMenuItemGeocentric = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItemGeographic = new javax.swing.JRadioButtonMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnAbout = new javax.swing.JMenuItem();
 
@@ -217,6 +226,29 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Options");
+
+        buttonGroup1.add(jRadioButtonMenuItemGeocentric);
+        jRadioButtonMenuItemGeocentric.setSelected(true);
+        jRadioButtonMenuItemGeocentric.setText("Geocentric Coordinates (X, Y, Z)");
+        jRadioButtonMenuItemGeocentric.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItemGeocentricActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItemGeocentric);
+
+        buttonGroup1.add(jRadioButtonMenuItemGeographic);
+        jRadioButtonMenuItemGeographic.setText("Geographic Coordinates (decimal: lat, lon)");
+        jRadioButtonMenuItemGeographic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItemGeographicActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItemGeographic);
+
+        jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Help");
 
@@ -399,6 +431,16 @@ public class BEVMergerUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnAboutActionPerformed
 
+    private void jRadioButtonMenuItemGeocentricActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemGeocentricActionPerformed
+        // TODO add your handling code here:
+        this.coordinateType = CoordinateType.Geocentric;
+    }//GEN-LAST:event_jRadioButtonMenuItemGeocentricActionPerformed
+
+    private void jRadioButtonMenuItemGeographicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemGeographicActionPerformed
+        // TODO add your handling code here:
+        this.coordinateType = CoordinateType.Geographic;
+    }//GEN-LAST:event_jRadioButtonMenuItemGeographicActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -472,6 +514,8 @@ public class BEVMergerUI extends javax.swing.JFrame {
                 this.txtInETRS.getText(),
                 this.txtOutMerged.getText()
         );
+        merger.setCoordinateType(this.coordinateType);
+        
         try {
             mergeText = merger.convert();
         } catch (java.io.IOException e)  {
@@ -499,6 +543,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JButton btnInMGI;
     private javax.swing.JButton btnMerge;
     private javax.swing.JButton btnOutMerged;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFileChooser fcInETRS;
     private javax.swing.JFileChooser fcInMGI;
     private javax.swing.JFileChooser fcOutMerged;
@@ -508,8 +553,11 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemGeocentric;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemGeographic;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
