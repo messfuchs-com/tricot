@@ -15,15 +15,17 @@
  */
 package com.messfuchs.geo.models;
 
+
 /**
  *
  * @author jurgen
  */
-public class LocalCoordinate implements  Comparable {
+public class LocalCoordinate implements  StringComparable {
     
     public Double east, north, height;
     public String name, code;
-
+    public boolean useThis = true;
+    
     public LocalCoordinate(String name, Double east, Double north, Double height, String code) {
         this.name = name;
         this.east = east;
@@ -41,7 +43,7 @@ public class LocalCoordinate implements  Comparable {
     }
 
     public LocalCoordinate(Double east, Double north, Double height) {
-        this("Coordinate", east, north, height, null);
+        this("LocalCoordinate", east, north, height, null);
     }
 
     public LocalCoordinate(Double east, Double north) {
@@ -53,20 +55,60 @@ public class LocalCoordinate implements  Comparable {
         this.name = name;
     }
     
+    public LocalCoordinate(String name, double[] coords) {
+        this.name = name;
+        this.east = coords[0];
+        this.north = coords[1];
+        this.height = coords[1];
+        this.code = null;
+    }
+    
+    public static LocalCoordinate zero(String name) {
+        return new LocalCoordinate(name, 0.0, 0.0, 0.0, null);
+    }
+
+    public LocalCoordinate add(LocalCoordinate other) {
+        return new LocalCoordinate(
+                this.getName(),
+                this.getEast() + other.getEast(),
+                this.getNorth() + other.getNorth(),
+                this.getHeight() + other.getHeight()
+        );
+    }
+
+    public LocalCoordinate subtract(LocalCoordinate other) {
+        // System.out.println(this + " - " + other);
+        LocalCoordinate tmpCoordinate = new LocalCoordinate(
+                this.getName(),
+                this.getEast() - other.getEast(),
+                this.getNorth() - other.getNorth(),
+                this.getHeight() - other.getHeight()
+        );
+        tmpCoordinate.setName(this.getName() + "_sub_" + other.getName());
+        // System.out.println("Diff: " + tmpCoordinate);
+        return tmpCoordinate;
+    }
+
+    public LocalCoordinate divide(double divisor) {
+        return new LocalCoordinate(
+                this.getName(),
+                this.getEast() / divisor,
+                this.getNorth() / divisor,
+                this.getHeight() / divisor,
+                this.code
+        );
+    }
+    
     public LocalCoordinate() {
-        this(null, null);
+        this(null, null, null, null);
     }
 
     @Override
     public String toString() {
-        return "Coordinate{" +
-                "east=" + east +
-                ", north=" + north +
-                ", height=" + height +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                '}';
+        return "LocalCoordinate{name=" + name + ", code=" + code + ", east=" + east + ", north=" + north + ", height=" + height + '}';
     }
+
+    
 
     @Override
     public String getCompareString() {return this.getName(); }

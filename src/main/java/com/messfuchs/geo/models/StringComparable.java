@@ -1,6 +1,6 @@
 package com.messfuchs.geo.models;
 
-public interface Comparable {
+public interface StringComparable {
 
     String getCompareString();
 }

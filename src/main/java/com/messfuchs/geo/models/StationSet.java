@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 public class StationSet {
 
-    private Set<TachyMeasurement> set = new TreeSet<TachyMeasurement>(new CompareSorter());
+    private final Set<TachyMeasurement> set = new TreeSet<>(new CompareSorter());
 
     public int size() {
         return set.size();

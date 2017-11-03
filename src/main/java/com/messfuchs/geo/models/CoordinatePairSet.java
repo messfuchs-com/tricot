@@ -15,6 +15,7 @@
  */
 package com.messfuchs.geo.models;
 
+// import at.messfuchs.geo.models.CoordinatePair;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,7 +26,7 @@ import java.util.TreeSet;
  */
 public class CoordinatePairSet {
         
-    private Set<CoordinatePair> set = new TreeSet<>(new CompareSorter());
+    private final Set<CoordinatePair> set = new TreeSet<>(new CompareSorter());
 
     public boolean add(CoordinatePair coordinate) {
         return this.set.add(coordinate);

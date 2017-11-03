@@ -21,32 +21,43 @@ import java.util.Objects;
  *
  * @author jurgen
  */
-public class CoordinatePair implements Comparable {
+public class CoordinatePair implements StringComparable {
     
     private LocalCoordinate local;
     private GeocentricCoordinate geocentric;
+    private GeographicCoordinate geographic;
     private String name;
     
-    public CoordinatePair(LocalCoordinate local, GeocentricCoordinate geocentric) {
+    public CoordinatePair(LocalCoordinate local, GeocentricCoordinate geocentric, GeographicCoordinate geographic) {
         this.local = local;
         this.geocentric = geocentric;
-        this.name = local.getName() + " :: " + geocentric.getName();
+        this.geographic = geographic;
+        this.name = local.getName() + "::" + geocentric.getName();
+    }
+    
+    public CoordinatePair(LocalCoordinate local, GeocentricCoordinate geocentric) {
+        this(local, geocentric, null);
     }
 
     @Override
     public String toString() {
-        return "CoordinatePair{" + "local=" + local + ", geocentric=" + geocentric + ", name=" + name + '}';
+        return "CoordinatePair{" + "local=" + local + ", geocentric=" + geocentric + "geographic=" + geographic + ", name=" + name + '}';
     }
     
     @Override
     public String getCompareString() {return this.getName(); }
     
     public void setPair(LocalCoordinate local, GeocentricCoordinate geocentric) {
+        this.setPair(local, geocentric, null);
+    }
+    
+    public void setPair(LocalCoordinate local, GeocentricCoordinate geocentric, GeographicCoordinate geographic) {
         this.setName(local.getName() + " :: " + geocentric.getName());
         this.setLocal(local);
         this.setGeocentric(geocentric);
+        this.setGeographic(geographic);
     }
-
+    
     public LocalCoordinate getLocal() {
         return local;
     }
@@ -63,6 +74,14 @@ public class CoordinatePair implements Comparable {
         this.geocentric = geocentric;
     }
 
+    public GeographicCoordinate getGeographic() {
+        return geographic;
+    }
+
+    public void setGeographic(GeographicCoordinate geographic) {
+        this.geographic = geographic;
+    }
+
     public String getName() {
         return name;
     }
@@ -76,6 +95,7 @@ public class CoordinatePair implements Comparable {
         int hash = 3;
         hash = 97 * hash + Objects.hashCode(this.local);
         hash = 97 * hash + Objects.hashCode(this.geocentric);
+        hash = 97 * hash + Objects.hashCode(this.geographic);
         return hash;
     }
 

@@ -240,7 +240,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jMenu3.add(jRadioButtonMenuItemGeocentric);
 
         buttonGroup1.add(jRadioButtonMenuItemGeographic);
-        jRadioButtonMenuItemGeographic.setText("Geographic Coordinates (decimal: lat, lon)");
+        jRadioButtonMenuItemGeographic.setText("Geographic Coordinates (decimal: lat, lon, elev)");
         jRadioButtonMenuItemGeographic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonMenuItemGeographicActionPerformed(evt);

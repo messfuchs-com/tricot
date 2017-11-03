@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.messfuchs.geo;
+package com.messfuchs.geo.models;
 
 import com.messfuchs.geo.models.BEVMerger;
+import com.messfuchs.geo.models.CoordinateType;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.util.Formatter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -30,6 +33,8 @@ import java.util.Formatter;
 public class BEVMergerTest extends TestCase{
     
     private final String resourcePath = "src/test/resources";
+    private static final Logger LOG = LogManager.getLogger(BEVMerger.class.getName());
+
     
     /**
      * Create the test case
@@ -50,11 +55,14 @@ public class BEVMergerTest extends TestCase{
     }
     
     public void testBEVInput() {
+        // System.out.println("Test BEV-Input : " + this.resourcePath);
         BEVMerger bm = new BEVMerger(
                 this.resourcePath + "/" + "0004769401_MGI_PUNKTART_EP.csv",
                 this.resourcePath + "/" + "0004769401_ETRS_PUNKTART_EP.csv",
                 this.resourcePath + "/" + "0004769401_MERGE_PUNKTART_EP.csv"
         );
+        bm.setCoordinateType(CoordinateType.Geographic);
+                
         try {
             String bmText = bm.convert();
         } catch (java.io.IOException e)  {
@@ -92,6 +100,7 @@ public class BEVMergerTest extends TestCase{
     }
     
     public void testCustomEP() {
+        
         BEVMerger bm = new BEVMerger(
                 this.resourcePath + "/" + "Steingrube_EP_MGI.csv",
                 this.resourcePath + "/" + "Steingrube_EP_ETRS.csv",

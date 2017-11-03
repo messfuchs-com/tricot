@@ -1,8 +1,9 @@
 package com.messfuchs.geo.models;
 
 import java.util.Set;
+// import at.messfuchs.geo.models.StringComparable;
 
-public class Site implements Comparable {
+public class Site implements StringComparable {
     public String name;
     public LocalCoordinateSet localCoordinateSet = new LocalCoordinateSet();
     public GeocentricCoordinateSet geocentricCoordinateSet = new GeocentricCoordinateSet();
@@ -87,7 +88,7 @@ public class Site implements Comparable {
                 if (!local.getName().equals(geocentric.getName())) continue;
                 
                 if (local.getHeight() == null) {
-                    local.setHeight(geocentric.elev);
+                    local.setHeight(0.0);
                 }
                 
                 arrayListCoordinatePair.add(

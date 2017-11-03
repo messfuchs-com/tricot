@@ -1,6 +1,12 @@
 package com.messfuchs.geo;
 
-import com.messfuchs.geo.models.*;
+import com.messfuchs.geo.models.TachyMeasurement;
+import com.messfuchs.geo.models.LocalCoordinate;
+import com.messfuchs.geo.models.GSIReader;
+import com.messfuchs.geo.models.CSVWriter;
+import com.messfuchs.geo.models.TachyResponse;
+import com.messfuchs.geo.models.GSIWriter;
+import com.messfuchs.geo.models.Site;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

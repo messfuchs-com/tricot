@@ -1,6 +1,9 @@
 package com.messfuchs.geo.models;
 
-public class TachyMeasurement extends Measurement implements Comparable{
+// import at.messfuchs.geo.models.StringComparable
+        ;
+
+public class TachyMeasurement extends Measurement implements StringComparable{
 
     public TachyResponse response;
 
@@ -11,6 +14,7 @@ public class TachyMeasurement extends Measurement implements Comparable{
         this.generateUuid();
     }
 
+    @Override
     public String getCompareString() {
         return this.station + this.target + this.getUuid();
     }

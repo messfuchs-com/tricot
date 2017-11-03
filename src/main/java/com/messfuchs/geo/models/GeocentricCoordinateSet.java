@@ -5,6 +5,7 @@
  */
 package com.messfuchs.geo.models;
 
+// import at.messfuchs.geo.models.GeocentricCoordinate;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,7 +16,7 @@ import java.util.TreeSet;
  */
 public class GeocentricCoordinateSet {
     
-    private Set<GeocentricCoordinate> set = new TreeSet<>(new CompareSorter());
+    private final Set<GeocentricCoordinate> set = new TreeSet<>(new CompareSorter());
 
     public boolean add(GeocentricCoordinate coordinate) {
         return this.set.add(coordinate);

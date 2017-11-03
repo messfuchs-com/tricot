@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 jurgen.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+    <head>
+        <title>Plane Similarity Result</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Transformation Parameter MGI <-> ETRS89 (BEV, EPSG::1618)</h4>
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Value</th>
+                                        <th>Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Translation X</td>
+                                        <td>577.325</td>
+                                        <td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Translation Y</td>
+                                        <td>20.143</td>
+                                        <td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Translation Z</td>
+                                        <td>1.23</td>
+                                        <td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotation X</td>
+                                        <td>4.143</td>
+                                        <td>arc_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotation Y</td>
+                                        <td>3.123</td>
+                                        <td>arc_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotation Z</td>
+                                        <td>5.134</td>
+                                        <td>arc_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scale</td>
+                                        <td>2.132</td>
+                                        <td>ppm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Projection Parameter Set</h4>
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Value</th>
+                                        <th>Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Method</td><td>Transverse Mercator</td><td>EPSG::9999</td>                                      
+                                    </tr>
+                                    <tr>
+                                        <td>Latitude of Origin</td><td>0.0</td><td>[NS]dd mm ss</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Longitude of Origin</td><td>0.0</td><td>[EW]dd mm ss</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scale</td><td>1.0</td><td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>False Easting</td><td>0.0</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <td>False Northing</td><td>-5000000.0</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ellipsoid</td><td>Bessel 1841</td><td>EPSG::7009</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Projected Coordinates</h4>
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Point ID</th>
+                                        <th>East</th>
+                                        <th>North</th>
+                                        <th>Height</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    #foreach ( $coord in $local )
+                                    <tr>
+                                        <td>$coord.name</td>
+                                        <td>$coord.getEast()</td>
+                                        <td>$coord.getNorth()</td>
+                                        <td>$coord.getHeight()</td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Geocentric Coordinates</h4>
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Point ID</th>
+                                        <th>ECEF_X</th>
+                                        <th>ECEF_Y</th>
+                                        <th>ECEF_Z</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    #foreach ( $coord in $geocentric )
+                                    <tr>
+                                        <td>$coord.name</td>
+                                        <td>$coord.getX()</td>
+                                        <td>$coord.getY()</td>
+                                        <td>$coord.getZ()</td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Points used for Transformation</h4>
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Point</th>
+                                        <th>ECEF_X</th>
+                                        <th>ECEF_Y</th>
+                                        <th>ECEF_Z</th>
+                                        <th>LocalEastReal</th>
+                                        <th>LocalNorthReal</th>
+                                        <th>LocalHeighReal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    #foreach( $coordinatePair in $coordinatePairList )
+                                    <tr>
+                                        <td>$coordinatePair.name</td>
+                                        <td>$coordinatePair.geocentric.getX()</td>
+                                        <td>$coordinatePair.geocentric.getY()</td>
+                                        <td>$coordinatePair.geocentric.getZ()</td>
+                                        <td>$coordinatePair.localReal.getEast()</td>
+                                        <td>$coordinatePair.localReal.getNorth()</td>
+                                        <td>$coordinatePair.localReal.getHeight()</td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Results</h4>
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Point</th>
+                                        <th>LocalEastCalc</th>
+                                        <th>LocalNorthCalc</th>
+                                        <th>LocalHeightCalc</th>
+                                        <th>ResidualEast</th>
+                                        <th>ResidualNorth</th>
+                                        <th>ResidualHeight</th>
+                                        <th>Marker</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>41-158A1</td>
+                                        <td>3191.921</td>
+                                        <td>234911.481</td>
+                                        <td>256.151</td>
+                                        <td>-2.0</td>
+                                        <td>-1.0</td>
+                                        <td>1.0</td>
+                                        <td>OK</td>
+                                    </tr>
+                                    #foreach( $coordinatePair in $coordinatePairList )
+                                    <tr>
+                                        <td>$coordinatePair.name</td>
+                                        <td>$coordinatePair.localCalc.getEast()</td>
+                                        <td>$coordinatePair.localCalc.getNorth()</td>
+                                        <td>$coordinatePair.localCalc.getHeight()</td>
+                                        <td>$coordinatePair.localRes.getEast()</td>
+                                        <td>$coordinatePair.localRes.getNorth()</td>
+                                        <td>$coordinatePair.localRes.getHeight()</td>
+                                        <td>$coordinatePair.getValidityText()</td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -9,35 +9,65 @@ package com.messfuchs.geo.models;
  *
  * @author jurgen
  */
-public class GeocentricCoordinate implements Comparable {
-    public Double x,y,z, lat, lon, elev, undul, height;
+public class GeocentricCoordinate implements StringComparable {
+    public Double x,y,z, undul, height;
     public String name, code;
    
-    public GeocentricCoordinate(String name, Double x, Double y, Double z, String code, Double elev, Double lat, Double lon) {
+    public GeocentricCoordinate(String name, Double x, Double y, Double z, String code) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.z = z;
         this.code = code;
-        this.elev = elev;
-        this.lat = lat;
-        this.lon = lon;
+    }
+    
+    public static GeocentricCoordinate zero(String name) {
+        return new GeocentricCoordinate(name, 0.0, 0.0, 0.0, null);
+    }
+    
+    public GeocentricCoordinate divide(double divisor) {
+        return new GeocentricCoordinate(
+                this.getName(),
+                this.getX() / divisor,
+                this.getY() / divisor,
+                this.getZ() / divisor,
+                this.code
+        );
+    }
+    
+    public GeocentricCoordinate subtract(GeocentricCoordinate other) {
+        GeocentricCoordinate tmpCoordinate = new GeocentricCoordinate(
+                this.getName() + "_sub_" + other.getName(),
+                this.getX() - other.getX(),
+                this.getY() - other.getY(),
+                this.getZ() - other.getZ()
+        );
+        return tmpCoordinate;
+    }
+    
+    public GeocentricCoordinate add(GeocentricCoordinate other) {
+        GeocentricCoordinate tmpCoordinate = new GeocentricCoordinate(
+                this.getName() + "_add_" + other.getName(),
+                this.getX() + other.getX(),
+                this.getY() + other.getY(),
+                this.getZ() + other.getZ()
+        );
+        return tmpCoordinate;
+    }    
+    public double[] asArray() {
+        double[] a = {this.x, this.y, this.z};
+        return a;
     }
 
     @Override
     public String toString() {
-        return "GeocentricCoordinate{" + "x=" + x + ", y=" + y + ", z=" + z + ", elev=" + elev + ", undul=" + undul + ", height=" + height + ", name=" + name + ", code=" + code + '}';
+        return "GeocentricCoordinate{name=" + name + ", code=" + code + ", x=" + x + ", y=" + y + ", z=" + z + '}';
     }
     
-    public GeocentricCoordinate(String name, Double x, Double y, Double z, Double elev) {
-        this(name, x, y, z, null, elev, null, null);
-    }
-    
-
     public GeocentricCoordinate(String name, Double x, Double y, Double z) {
         this(name, x, y, z, null);
     }
-
+    
     public GeocentricCoordinate(String name, Double x, Double y) {
         this(name, x, y, 0.0);
     }
@@ -49,6 +79,13 @@ public class GeocentricCoordinate implements Comparable {
     public GeocentricCoordinate(Double x, Double y) {
         this(x, y, 0.0);
     }
+    
+    public GeocentricCoordinate(String name, double[] coord) {
+        this.name = name;
+        this.x = coord[0];
+        this.y = coord[1];
+        this.z = coord[2];
+    }
 
     public GeocentricCoordinate(String name) {
         this();
@@ -56,7 +93,7 @@ public class GeocentricCoordinate implements Comparable {
     }
 
     public GeocentricCoordinate() {
-        this(null, null);
+        this(null, null, null, null);
     }
 
     @Override
