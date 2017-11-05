@@ -19,6 +19,7 @@ import com.messfuchs.geo.models.GeocentricCoordinate;
 import com.messfuchs.geo.models.GeographicCoordinate;
 import com.messfuchs.geo.models.LocalCoordinate;
 import com.messfuchs.geo.models.IdenticalPoint;
+import com.messfuchs.geo.models.CoordinateComplex;
 
 import java.util.ArrayList;
 import java.io.StringWriter;
@@ -51,6 +52,8 @@ public class Cadastre {
     public final TransverseMercator PROJECTION = Constants.MGI;
     public Geocentric2Geographic gz2Gg;
     
+    private final ArrayList<CoordinateComplex> cordComplexList;
+    
     private final ArrayList<GeocentricCoordinate> geocentricCoordinateList;
     private final ArrayList<LocalCoordinate> calcLocalCoordinateList;
     private final ArrayList<LocalCoordinate> realLocalCoordinateList;
@@ -63,6 +66,8 @@ public class Cadastre {
         this.geocentricCoordinateList = new ArrayList<>();
         this.calcLocalCoordinateList = new ArrayList<>();
         this.realLocalCoordinateList = new ArrayList<>();
+        this.cordComplexList = new ArrayList<>();
+        
         this.gz2Gg = new Geocentric2Geographic(Constants.BESSEL1841);   
         try {
             this.TRANSFOMATION = Constants.MGI_TO_ETRS89_TRANSFORMATION.inverse();
@@ -77,6 +82,7 @@ public class Cadastre {
         this.realLocalCoordinateList = new ArrayList<>();
         this.gz2Gg = new Geocentric2Geographic(Constants.BESSEL1841);
         this.TRANSFOMATION = Constants.MGI_TO_ETRS89_TRANSFORMATION.inverse();
+        this.cordComplexList = new ArrayList<>();
     }
     
     // TODO add coordinates
@@ -102,6 +108,8 @@ public class Cadastre {
         LOG.debug("Compute Identical Local Points");
         this.geocentricCoordinateList.stream().forEach(gc -> {
             
+            this.cordComplexList.add(new CoordinateComplex(gc));
+                  
             double[] targetGeocentric = null;
             double[] targetGeographic = null;
             double[] targetProjected;

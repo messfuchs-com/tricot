@@ -222,14 +222,9 @@ limitations under the License.
                         <div class="card-body">
                             <h4 class="card-title">Results</h4>
                             <table class="table" border="1">
-                                <col align="left">
-                                <col align="right">
-                                <col align="right">
-                                <col align="right">
-                                <col align="left">
                                 <thead>
                                     <tr>
-                                        <th>Point</th>
+                                        <th>Point ID</th>
                                         <th>ResidualEast</th>
                                         <th>ResidualNorth</th>
                                         <th>ResidualHeight</th>
@@ -241,12 +236,12 @@ limitations under the License.
                                     #set($str = '')
                                     <tr>
                                         <td>$coord.getName()</td>
-                                        <td>$str.format("%.3f", $coord.getEast())</td>
-                                        <td>$str.format("%.3f", $coord.getNorth())</td>
+                                        <td style="text-align: right">$str.format("%.3f", $coord.getEast())</td>
+                                        <td style="text-align: right">$str.format("%.3f", $coord.getNorth())</td>
                                         #if (!$coord.getHeight())
                                         <td />
                                         #else
-                                        <td>$str.format("%.3f", $coord.getHeight)</td>
+                                        <td style="text-align: right">$str.format("%.3f", $coord.getHeight)</td>
                                         #end
                                         <td>$coord.getCode()</td>
                                     </tr>
