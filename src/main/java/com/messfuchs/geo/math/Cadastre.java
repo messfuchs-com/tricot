@@ -71,16 +71,12 @@ public class Cadastre {
         }
     }
 
-    public Cadastre(ArrayList<GeocentricCoordinate> geocentricCoordinateList) {
+    public Cadastre(ArrayList<GeocentricCoordinate> geocentricCoordinateList) throws NonInvertibleOperationException {
         this.geocentricCoordinateList = geocentricCoordinateList;
         this.calcLocalCoordinateList = new ArrayList<>();
         this.realLocalCoordinateList = new ArrayList<>();
         this.gz2Gg = new Geocentric2Geographic(Constants.BESSEL1841);
-        try {
-            this.TRANSFOMATION = Constants.MGI_TO_ETRS89_TRANSFORMATION.inverse();
-        } catch (NonInvertibleOperationException e) {
-            LOG.error(e);
-        }
+        this.TRANSFOMATION = Constants.MGI_TO_ETRS89_TRANSFORMATION.inverse();
     }
     
     // TODO add coordinates
@@ -104,11 +100,11 @@ public class Cadastre {
     
     public boolean execute() throws IOException {
         LOG.debug("Compute Identical Local Points");
-        for (GeocentricCoordinate gc: this.geocentricCoordinateList) {
+        this.geocentricCoordinateList.stream().forEach(gc -> {
             
             double[] targetGeocentric = null;
             double[] targetGeographic = null;
-            double[] targetProjected  = null;
+            double[] targetProjected;
                     
             // SOURCE GEOCENTRIC -> TARGET GEOCENTRIC (ETRS89/GRS80 -> MGI/BESSEL1841)
             try {
@@ -131,23 +127,23 @@ public class Cadastre {
                 targetProjected = this.PROJECTION.transform(targetGeographic);
                 this.calcLocalCoordinateList.add(new LocalCoordinate(
                     gc.getName(), targetProjected));
-               
-               
             } catch (CoordinateDimensionException e) {
                 LOG.error("Error while Projection");
                 LOG.error(e);
             }
-        }
+        });
         
         // PLANE SIMILARITY
         LOG.debug("Compute Plane Similarity");
         
-        for ( LocalCoordinate real: this.realLocalCoordinateList) {
-            for ( LocalCoordinate calc: this.calcLocalCoordinateList) {
-                if (!real.getName().equals(calc.getName())) continue;
-                planeSimilarity.addIdenticalPoint(new IdenticalPoint(calc, real));
-            }
-        }
+        this.realLocalCoordinateList.stream().forEach(real -> {
+            this.calcLocalCoordinateList.stream()
+                .filter(calc -> calc.getName().equals(real.getName())).
+                forEach(calc -> {
+                    this.planeSimilarity.addIdenticalPoint(
+                        new IdenticalPoint(calc, real));
+                });
+        });
         
         LOG.info("PlaneSimilarity Class got Identical Points: " + planeSimilarity.size());
         
@@ -173,11 +169,13 @@ public class Cadastre {
         vc.put("geocentric", this.geocentricCoordinateList);
         vc.put("local", this.realLocalCoordinateList);
         vc.put("identicalPoints", this.planeSimilarity.getIdenticalPointList());
+        vc.put("results", this.planeSimilarity.getTargetPointAccuracyList());
+        vc.put("str", String.class);
         
         StringWriter sw = new StringWriter();
         t.merge(vc, sw);
-        FileWriter fw = new FileWriter(outFileName);
-        fw.write(sw.toString());
-        fw.close();
+        try (FileWriter fw = new FileWriter(outFileName)) {
+            fw.write(sw.toString());
+        }
     }
 }

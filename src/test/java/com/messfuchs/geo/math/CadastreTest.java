@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 package com.messfuchs.geo.math;
-
-import com.messfuchs.geo.math.PlaneSimilarity;
 import com.messfuchs.geo.models.BEVMerger;
-import com.messfuchs.geo.models.CoordinatePair;
-import com.messfuchs.geo.math.Cadastre;
-
 import junit.framework.TestCase;
-import java.util.ArrayList;
 import java.io.IOException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,27 +47,30 @@ public class CadastreTest extends TestCase {
         this.cadastre = new Cadastre();
     }
     
-    public void testPlaneSimilarity() throws IOException {
+    public void testPlaneSimilarity() throws IOException, java.lang.IllegalArgumentException {
         LOG.debug("Load Data from File");
         try {
             String bmText = this.bevMerger.convert();
-        } catch (java.io.IOException e)  {
-            e.printStackTrace();
-        } catch (java.lang.IllegalArgumentException e) {
+            LOG.debug(bmText);
+        } /*catch (java.lang.IllegalArgumentException e) {
             int i = e.toString().indexOf("Mapping for");
             if (i >= 0) {
-                int j = e.toString().indexOf("not found, expected");
+                i = e.toString().indexOf("not found but expected");
             } else {
                 assertTrue(false);
             } 
-        }
+        } */
+        finally {}
         LOG.debug("Got " + this.bevMerger.getIdenticPoints() + " identical points");
         assertTrue(this.bevMerger.getIdenticPoints() == 6); 
         
         LOG.info("Testing Plane Similarity");
-        for (CoordinatePair cp: this.bevMerger.getCoordinatePairList()) {
+        this.bevMerger.getCoordinatePairList().stream().forEach((cp) -> {
             this.cadastre.addCoordinatePair(cp.getLocal(), cp.getGeocentric());
-        }
+        });
+        /*for (CoordinatePair cp: this.bevMerger.getCoordinatePairList()) {
+            this.cadastre.addCoordinatePair(cp.getLocal(), cp.getGeocentric());
+        }*/
         this.cadastre.execute();
         assertTrue(true);
     }

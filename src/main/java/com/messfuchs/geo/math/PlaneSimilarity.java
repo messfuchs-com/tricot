@@ -9,10 +9,6 @@ import java.lang.Math;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-
 
 public class PlaneSimilarity {
     
@@ -21,13 +17,13 @@ public class PlaneSimilarity {
         
     private ArrayList<IdenticalPoint> identicalPointList;
     private ArrayList<IdenticalPoint> residualPointList;
-    private ArrayList<LocalCoordinate> targetPointAccuracyList = null;
+    private ArrayList<LocalCoordinate> targetPointAccuracyList = new ArrayList<>();
     private IdenticalPoint identicalAveragePoint;
     private double a0, a1, b0, b1;
     private double te, tn, r, s;
     private double param1 = 0., param2 = 0., param3 = 0., param4 = 0., param5 = 0.;
     private double param6 = 0., param7 = 0., m0, mp;
-    private ArrayList<String> skippedIdenticalPoint = new ArrayList<>();
+    private final ArrayList<String> skippedIdenticalPoint = new ArrayList<>();
     
     private static final Logger LOG = LogManager.getLogger(PlaneSimilarity.class.getName());
 
@@ -94,13 +90,13 @@ public class PlaneSimilarity {
    }
     public void computeParams() {
         // compute a1, b1
-        for (IdenticalPoint rp: this.residualPointList) {
+        this.residualPointList.stream().forEach(rp -> {
             param1 = param1 + rp.getSourcePoint().getEast() * rp.getTargetPoint().getEast();
             param2 = param2 + rp.getSourcePoint().getNorth() * rp.getTargetPoint().getNorth();
             param3 = param3 + rp.getSourcePoint().getEast() * rp.getTargetPoint().getNorth();
             param4 = param4 + rp.getSourcePoint().getNorth() * rp.getTargetPoint().getEast();
             param5 = param5 + Math.pow(rp.getSourcePoint().getEast(), 2) + Math.pow(rp.getSourcePoint().getNorth(), 2);
-        }
+        });
         LOG.debug("Parameters: ");
         LOG.debug("Param I:   " + param1);
         LOG.debug("Param II:  " + param2);
@@ -123,14 +119,7 @@ public class PlaneSimilarity {
         LOG.debug(String.format("a1:        %20.8f", this.a1));
         LOG.debug(String.format("b1:        %20.8f", this.b1));
         System.out.println("");
-        
-        /*double r = Math.toDegrees(this.r);
-        double r_deg = Math.floor(Math.abs(r));
-        double r_min = (r - r_deg) * 60;
-        double r_sec = (r_min - Math.floor(r_min)) * 60;
-        r_min = Math.floor(r_min);
-        System.out.println(String.format("%.0f %.0f %.2f", r_deg, r_min, r_sec));*/
-        
+
         this.te = this.a0;
         this.tn = this.b0;
         
@@ -143,11 +132,12 @@ public class PlaneSimilarity {
 
     public ArrayList<IdenticalPoint> computeResiduals() {
         ArrayList<IdenticalPoint> tmpResidualPointList = new ArrayList<>();
-        for (IdenticalPoint ip: this.identicalPointList) {
-            if (ip.usePair == true) {
+        this.identicalPointList
+            .stream()
+            .filter(ip -> ip.usePair == true)
+            .forEach(ip -> {
                 tmpResidualPointList.add(ip.subtract(this.identicalAveragePoint));                
-            }
-        }
+        });
         return tmpResidualPointList;
     }
 
@@ -178,26 +168,32 @@ public class PlaneSimilarity {
         ArrayList<LocalCoordinate> calculatedTargetPointList = new ArrayList<>();
         this.targetPointAccuracyList = new ArrayList<>();
 
-        for (IdenticalPoint ip: this.identicalPointList) {
-            if (ip.usePair == true) {
+        this.identicalPointList.stream()
+            .filter(ip -> ip.usePair == true)
+            .forEach(ip -> {
                 LocalCoordinate calc = this.getCalculatedCoordinate(ip.getSourcePoint());
                 // LOG.debug("Calculated: " + calc);
                 calculatedTargetPointList.add(calc);
                 LocalCoordinate diff = ip.getTargetPoint().subtract(calc);
                 diff.setName(ip.getTargetPoint().getName() + "_imp");
                 String outString = String.format("Point: %15s, d_East: %6.3f, d_North: %6.3f", diff.getName(), diff.getEast() , diff.getNorth());
+                diff.setCode("");
                 if (Math.abs(diff.getEast()) >= MAX_DIFF_EAST) {
+                    diff.setCode(diff.getCode() + "EAST_EXCEEDED");
                     outString = outString + ", EAST_EXCEEDED";
                 }
                 if (Math.abs(diff.getNorth()) >= MAX_DIFF_NORTH) {
+                    diff.setCode(diff.getCode() + " NORTH_EXCEEDED");
+                    diff.setCode(diff.getCode().toString().trim());
                     outString = outString + ", NORTH_EXCEEDED";
                 }
                 LOG.debug(outString);
+                diff.setHeight(null);
                 this.targetPointAccuracyList.add(diff);
                 param6 = param6 + Math.pow(diff.getEast(), 2);
                 param7 = param7 + Math.pow(diff.getNorth(), 2);   
-            }
-        }
+        });
+        
         m0 = Math.sqrt((param6 + param7)/(2*this.identicalPointList.size()-4));
         mp = m0 * Math.sqrt(2);
 
@@ -233,5 +229,5 @@ public class PlaneSimilarity {
     public ArrayList<IdenticalPoint> getIdenticalPointList() {
         return identicalPointList;
     }
-    
+        
 }
