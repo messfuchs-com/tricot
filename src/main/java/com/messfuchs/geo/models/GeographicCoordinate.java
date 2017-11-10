@@ -12,6 +12,9 @@ import java.util.Objects;
  * @author jurgen
  */
 public class GeographicCoordinate implements StringComparable {
+    private final double epsAngle = 1e-6;
+    private final double epsDistance = 1e-2;
+    
     public Double lat, lon, elev, undul, height;
     public String name, code;
    
@@ -22,6 +25,33 @@ public class GeographicCoordinate implements StringComparable {
         this.code = code;
         this.elev = elev;
         this.undul = 0.;
+    }
+    
+    public static String toDDMMSS(double angle) {
+        double aDeg, aMin, aSec;
+        
+        aDeg = Math.floor(angle);
+        aMin = (angle - aDeg)*60;
+        aSec = (aMin - Math.floor(aMin))*60;
+        aMin = Math.floor(aMin);
+        
+        return String.format("%.0fd%.0fm%.4fs", aDeg, aMin, aSec);
+    }
+    
+    
+    
+    public boolean equals(GeographicCoordinate obj) {
+        if (obj == null) return false;
+        double dLat = this.lat - obj.lat;
+        double dLon = this.lon - obj.lon;
+        double dEle = this.elev - obj.elev;
+        
+        if (Math.abs(dLat) > epsAngle) return false;
+        if (Math.abs(dLon) > epsAngle) return false;
+        if (Math.abs(dEle) > epsDistance) return false;
+        
+        return true;
+        
     }
     
     public GeographicCoordinate(String name, Double lat, Double lon, Double elev) {
@@ -40,13 +70,24 @@ public class GeographicCoordinate implements StringComparable {
     }
     
     public double[] asArray() {
-        double[] a = {this.lat, this.lon, this.elev};
-        return a;
+        return new double[] {this.lat, this.lon, this.elev};
+    }
+    
+    public double[] asArrayRadians() {
+        return new double[] {
+            Math.toRadians(this.lat),
+            Math.toRadians(this.lon),
+            this.elev
+        };
     }
 
     @Override
     public String toString() {
-        return "GeographicCoordinate{name=" + name + ", code=" + code + ", lat=" + lat + ", lon=" + lon + ", elev=" + elev + ", undul=" + undul + ", height=" + height + '}';
+        return String.format(
+                "GeographicCoordinate{name=%s, code=%s, lon=%s, lat=%s, ele=%.3f}", 
+                name, code, 
+                toDDMMSS(lon), 
+                toDDMMSS(lat), elev);
     }
 
     @Override
@@ -128,7 +169,7 @@ public class GeographicCoordinate implements StringComparable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.lat, other.lat)) {
+        /*if (!Objects.equals(this.lat, other.lat)) {
             return false;
         }
         if (!Objects.equals(this.lon, other.lon)) {
@@ -136,7 +177,14 @@ public class GeographicCoordinate implements StringComparable {
         }
         if (!Objects.equals(this.elev, other.elev)) {
             return false;
-        }
+        }*/
+        double dLat = this.lat - other.lat;
+        double dLon = this.lon - other.lon;
+        double dEle = this.elev - other.elev;
+        
+        if (Math.abs(dLat) > epsAngle) return false;
+        if (Math.abs(dLon) > epsAngle) return false;
+        if (Math.abs(dEle) > epsDistance) return false;
         return true;
     }
     

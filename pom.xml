@@ -22,6 +22,7 @@
     <orekit.version>9.0</orekit.version>
     <orbisgis.version>1.5.1</orbisgis.version>
     <apache.velocity>1.7</apache.velocity>
+    <opensextant.version>2.0.1</opensextant.version>
   </properties>
   
   <dependencies>
@@ -84,6 +85,14 @@
         <artifactId>velocity</artifactId>
         <version>${apache.velocity}</version>
     </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/org.opensextant/geodesy -->
+    <dependency>
+        <groupId>org.opensextant</groupId>
+        <artifactId>geodesy</artifactId>
+        <version>${opensextant.version}</version>
+    </dependency>
+
 
   </dependencies>
     

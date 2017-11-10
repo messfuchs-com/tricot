@@ -22,47 +22,71 @@ import java.util.HashMap;
 import org.cts.op.transformation.SevenParameterTransformation;
 import org.cts.datum.Ellipsoid;
 import org.cts.op.projection.TransverseMercator;
+import org.cts.datum.PrimeMeridian;
 import org.cts.Parameter;
 import org.cts.units.Measure;
 import org.cts.units.Unit;
+
+/*import org.opensextant.geodesy.Ellipsoid;
+import org.opensextant.geodesy.TransverseMercator;
+import org.opensextant.geodesy.Longitude;
+import org.opensextant.geodesy.Latitude;*/
 
 /**
  *
  * @author jurgen
  */
 
-class Parameters {
-    static Map<String, Measure> p;
-    
-    Parameters() {
-        Map<String, Measure> tempMap = new HashMap<>();
-        tempMap.put(Parameter.FALSE_EASTING, new Measure(0.0, Unit.METER));
-        tempMap.put(Parameter.FALSE_NORTHING, new Measure(5000000.0, Unit.METER));
-        tempMap.put(Parameter.CENTRAL_MERIDIAN, new Measure(0, Unit.DEGREE));
-        tempMap.put(Parameter.SCALE_FACTOR, new Measure(1, Unit.UNIT));
-        tempMap.put(Parameter.LATITUDE_OF_ORIGIN, new Measure(16.0 + 20.0/60.0, Unit.DEGREE));
-        this.p = tempMap;
-    }
-}
 
 public final class Constants {
-    public final static SevenParameterTransformation MGI_TO_ETRS89_TRANSFORMATION = 
+    
+    public static final double tx = -577.326;
+    public static final double ty = -90.129;
+    public static final double tz = -463.919;
+    public static final double rx = 5.137;
+    public static final double ry = 1.474;
+    public static final double rz = 5.297;
+    public static final double ds = -2.4232;
+    
+    public static final double falseNorthing = -5000000.0;
+    public static final double falseEasting = 0.0;
+    public static final double originLatitude = 0.0;
+    public static final double originLongitude = (13.0+20.0/60.0);
+    public static final double originScale = 1.0;
+
+    
+    public final static SevenParameterTransformation ETRS89_TO_MGI_TRANSFORMATION = 
         SevenParameterTransformation.createSevenParameterTransformation(
-            577.326, 90.129, 463.919,  // tx, ty, tz
-            5.137, 1.474, 5.297,       // rx, ry, rz
-            2.4232,                    // scale
-            SevenParameterTransformation.COORDINATE_FRAME,
+            tx, ty, tz, rx, ry, rz, ds,
+            1,
             SevenParameterTransformation.LINEARIZED,
-            1.5);
+            1.5
+        );
+        /*SevenParameterTransformation.createBursaWolfTransformation(
+            tx, ty, tz, rx, ry, rz, ds
+        );*/
         
     public final static Ellipsoid GRS80 = Ellipsoid.GRS80;
     public final static Ellipsoid BESSEL1841 = Ellipsoid.BESSEL1841;
+    // public final static Ellipsoid GRS80 = Ellipsoid.getInstance("GRS80");
+    // public final static Ellipsoid BESSEL1841 = Ellipsoid.getInstance("Bessel 1841");
     
-    public final static TransverseMercator MGI = new TransverseMercator(Constants.BESSEL1841, new HashMap<String, Measure>(){{
-            put(Parameter.SCALE_FACTOR, new Measure(1.0, Unit.UNIT));
-            put(Parameter.CENTRAL_MERIDIAN, new Measure(13.0+20.0/60, Unit.DEGREE));
-            put(Parameter.FALSE_EASTING, new Measure(0.0, Unit.METER));
-            put(Parameter.FALSE_NORTHING, new Measure(-5000000, Unit.METER));
-            put(Parameter.LATITUDE_OF_ORIGIN, new Measure(0, Unit.DEGREE));
+    public final static PrimeMeridian GREENWICH = PrimeMeridian.GREENWICH;
+    
+    public final static TransverseMercator MGI = new TransverseMercator(BESSEL1841, new HashMap<String, Measure>(){{
+            put(Parameter.SCALE_FACTOR, new Measure(originScale, Unit.UNIT));
+            put(Parameter.CENTRAL_MERIDIAN, new Measure(originLongitude + GREENWICH.getLongitudeFromGreenwichInDegrees(), Unit.DEGREE));
+            put(Parameter.FALSE_EASTING, new Measure(falseEasting, Unit.METER));
+            put(Parameter.FALSE_NORTHING, new Measure(falseNorthing, Unit.METER));
+            put(Parameter.LATITUDE_OF_ORIGIN, new Measure(originLatitude, Unit.DEGREE));
         }});
+    
+    /*public final static TransverseMercator getProjection() {
+        TransverseMercator tm = new TransverseMercator(false);
+        tm.setEllipsoid(BESSEL1841);
+        tm.setScaleFactor(1.0);
+        tm.setCentralMeridian(new Longitude(originLongitude, org.opensextant.geodesy.Angle.DEGREES));
+        tm.setOriginLatitude(new Latitude(originLatitude, org.opensextant.geodesy.Angle.DEGREES));
+        return tm;
+    }*/
 }

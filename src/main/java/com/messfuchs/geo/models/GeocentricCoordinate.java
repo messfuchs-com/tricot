@@ -5,6 +5,8 @@
  */
 package com.messfuchs.geo.models;
 
+import java.util.Objects;
+
 /**
  *
  * @author jurgen
@@ -12,6 +14,7 @@ package com.messfuchs.geo.models;
 public class GeocentricCoordinate implements StringComparable {
     public Double x,y,z, undul, height;
     public String name, code;
+    private final double EPS = 1e-3;
    
     public GeocentricCoordinate(String name, Double x, Double y, Double z, String code) {
         this.name = name;
@@ -54,6 +57,15 @@ public class GeocentricCoordinate implements StringComparable {
         );
         return tmpCoordinate;
     }    
+    
+    public double getNorm() {
+        return Math.sqrt(
+            Math.pow(this.getX(), 2)+
+            Math.pow(this.getY(), 2)+
+            Math.pow(this.getZ(), 2)
+        );
+    }
+    
     public double[] asArray() {
         double[] a = {this.x, this.y, this.z};
         return a;
@@ -61,7 +73,7 @@ public class GeocentricCoordinate implements StringComparable {
 
     @Override
     public String toString() {
-        return "GeocentricCoordinate{name=" + name + ", code=" + code + ", x=" + x + ", y=" + y + ", z=" + z + '}';
+        return String.format("GeocentricCoordinate{name=%s, code=%s, x=%.3f, y=%.3f, z=%.3f}", name, code, x, y, z);
     }
     
     public GeocentricCoordinate(String name, Double x, Double y, Double z) {
@@ -138,23 +150,36 @@ public class GeocentricCoordinate implements StringComparable {
     public void setCode(String code) {
         this.code = code;
     }
-    
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
 
-        GeocentricCoordinate that = (GeocentricCoordinate) object;
-
-        if (x != null ? !x.equals(that.x) : that.x != null) return false;
-        if (y != null ? !y.equals(that.y) : that.y != null) return false;
-        if (z != null ? !z.equals(that.z) : that.z != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GeocentricCoordinate other = (GeocentricCoordinate) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!(Math.abs(this.getX() - other.getX()) <= EPS)) {
+            return false;
+        }
+        if (!(Math.abs(this.getY() - other.getY()) <= EPS)) {
+            return false;
+        }
+        if (!(Math.abs(this.getZ() - other.getZ()) <= EPS)) {
+            return false;
+        }
         return true;
     }
+    
 
+    @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (x != null ? x.hashCode() : 0);

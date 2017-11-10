@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 package com.messfuchs.geo.math;
+
 import com.messfuchs.geo.models.BEVMerger;
+import com.messfuchs.geo.models.GeocentricCoordinate;
+import com.messfuchs.geo.math.TransverseMercator;
+
 import junit.framework.TestCase;
 import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import org.cts.op.transformation.SevenParameterTransformation;
+// import org.cts.op.Geocentric2Geographic;
+import org.cts.IllegalCoordinateException;
+import org.cts.CoordinateDimensionException;
+
 
 /**
  *
@@ -47,7 +58,7 @@ public class CadastreTest extends TestCase {
         this.cadastre = new Cadastre();
     }
     
-    public void testPlaneSimilarity() throws IOException, java.lang.IllegalArgumentException {
+    public void testPlaneSimilarity() throws IOException, java.lang.IllegalArgumentException, CoordinateDimensionException {
         LOG.debug("Load Data from File");
         try {
             String bmText = this.bevMerger.convert();

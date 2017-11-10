@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="com.messfuchs.geo.AppTest" time="0.188" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="com.messfuchs.geo.math.TransverseMercatorTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64"/>
@@ -61,7 +61,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.messfuchs.geo.AppTest" name="testApp" time="0"/>
-  <testcase classname="com.messfuchs.geo.AppTest" name="testBasic" time="0.073"/>
-  <testcase classname="com.messfuchs.geo.AppTest" name="testDataReaderGSI" time="0.115"/>
+  <testcase classname="com.messfuchs.geo.math.TransverseMercatorTest" name="testToProjected" time="0"/>
 </testsuite>

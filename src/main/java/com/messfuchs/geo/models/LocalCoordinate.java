@@ -15,6 +15,8 @@
  */
 package com.messfuchs.geo.models;
 
+import java.util.Objects;
+
 
 /**
  *
@@ -25,6 +27,7 @@ public class LocalCoordinate implements  StringComparable {
     public Double east, north, height;
     public String name, code;
     public boolean useThis = true;
+    private final double EPS = 1e-1;
     
     public LocalCoordinate(String name, Double east, Double north, Double height, String code) {
         this.name = name;
@@ -78,8 +81,9 @@ public class LocalCoordinate implements  StringComparable {
 
     public LocalCoordinate subtract(LocalCoordinate other) {
         // System.out.println(this + " - " + other);
+        
         LocalCoordinate tmpCoordinate = new LocalCoordinate(
-                this.getName(),
+                "",
                 this.getEast() - other.getEast(),
                 this.getNorth() - other.getNorth(),
                 this.getHeight() - other.getHeight()
@@ -90,13 +94,13 @@ public class LocalCoordinate implements  StringComparable {
     }
 
     public LocalCoordinate divide(double divisor) {
-        return new LocalCoordinate(
-                this.getName(),
-                this.getEast() / divisor,
-                this.getNorth() / divisor,
-                this.getHeight() / divisor,
-                this.code
-        );
+        Double e = null;
+        Double n = null;
+        Double h = null;
+        if (divisor != 0.0 && this.getEast() != null) e = this.getEast() / divisor;
+        if (divisor != 0.0 && this.getNorth() != null) n = this.getNorth() / divisor;
+        if (divisor != 0.0 && this.getHeight() != null) h = this.getHeight() / divisor;
+        return new LocalCoordinate(this.getName(), e, n, h, this.code);
     }
     
     public LocalCoordinate() {
@@ -105,10 +109,8 @@ public class LocalCoordinate implements  StringComparable {
 
     @Override
     public String toString() {
-        return "LocalCoordinate{name=" + name + ", code=" + code + ", east=" + east + ", north=" + north + ", height=" + height + '}';
+        return String.format("LocalCoordinate{name=%s, code=%s, east=%.3f, north=%.3f, height=%.3f}", name, code, east, north, height);
     }
-
-    
 
     @Override
     public String getCompareString() {return this.getName(); }
@@ -151,21 +153,7 @@ public class LocalCoordinate implements  StringComparable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LocalCoordinate point = (LocalCoordinate) o;
-
-        if (Double.compare(point.getEast(), getEast()) != 0) return false;
-        if (Double.compare(point.getNorth(), getNorth()) != 0) return false;
-        if (Double.compare(point.getHeight(), getHeight()) != 0) return false;
-        if (!getName().equals(point.getName())) return false;
-        return getCode().equals(point.getCode());
-    }
+    }    
 
     @Override
     public int hashCode() {
@@ -180,5 +168,28 @@ public class LocalCoordinate implements  StringComparable {
         result = 31 * result + getName().hashCode();
         result = 31 * result + getCode().hashCode();
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LocalCoordinate other = (LocalCoordinate) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+
+        if (this.east != null ? (other.getEast() != null ? (Math.abs(this.east - other.getEast())>EPS) : false) : (other.getEast() != null)) return false;
+        if (this.north != null ? (other.getNorth() != null ? (Math.abs(this.north - other.getNorth())>EPS) : false) : (other.getNorth() != null)) return false;
+        if (this.height != null ? (other.getHeight() != null ? (Math.abs(this.height - other.getHeight())>EPS) : false) : (other.getHeight() != null)) return false;
+        
+        return true; 
     }
 }

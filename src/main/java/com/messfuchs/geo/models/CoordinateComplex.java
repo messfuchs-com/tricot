@@ -21,8 +21,10 @@ package com.messfuchs.geo.models;
  */
 public class CoordinateComplex {
     public String name, comment;
-    public LocalCoordinate real, calc, imp;
-    public GeocentricCoordinate ecef;
+    public LocalCoordinate real, calc, imp, medYX;
+    public GeocentricCoordinate ecefXYZ, mgiXYZ = null;
+    public GeographicCoordinate ecefEll = null, mgiEll = null;
+    
     public boolean usage;
 
     public CoordinateComplex(String name, String comment, LocalCoordinate real, LocalCoordinate calc, LocalCoordinate imp, GeocentricCoordinate ecef, boolean usage) {
@@ -31,16 +33,71 @@ public class CoordinateComplex {
         this.real = real;
         this.calc = calc;
         this.imp = imp;
-        this.ecef = ecef;
+        this.ecefXYZ = ecef;
         this.usage = usage;
     }
     
     public CoordinateComplex(GeocentricCoordinate ecef){
         this.name = ecef.getName();
+        this.ecefXYZ = ecef;
         this.comment = "";
         this.real = null;
         this.calc = null;
         this.imp = null;
-        this.usage = true;
+        this.usage = false;
     }
+    
+    public CoordinateComplex(){
+        this.name = null;
+        this.ecefXYZ = null;
+        this.comment = "";
+        this.real = null;
+        this.calc = null;
+        this.imp = null;
+        this.usage = false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public LocalCoordinate getReal() {
+        return real;
+    }
+
+    public LocalCoordinate getCalc() {
+        return calc;
+    }
+
+    public LocalCoordinate getImp() {
+        return imp;
+    }
+
+    public GeocentricCoordinate getEcef() {
+        return ecefXYZ;
+    }
+    
+    public GeocentricCoordinate getMgiXYZ() {
+        return mgiXYZ;
+    }
+    
+    public LocalCoordinate getMedYX() {
+        return medYX;
+    }
+
+    public boolean isUsage() {
+        return usage;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "CoordinateComplex{" + "name=" + name + ", comment=" + comment + ", real=" + real + ", calc=" + calc + ", imp=" + imp + ", ecef=" + ecefXYZ + ", usage=" + usage + '}';
+    }
+    
 }
