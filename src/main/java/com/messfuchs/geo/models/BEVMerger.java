@@ -201,10 +201,10 @@ public class BEVMerger {
                 Double lat = null, lon = null;
                 String pointName = null;
                 String pointType = record.get("PUNKTTYP");
-                if (pointType.equals("TP")) {
-                    pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + record.get("KENNZEICHEN");
-                } else if (pointType.equals("EP")) {
-                    pointName = record.get("PUNKTNUMMER") + "-" + record.get("OeK50_BMN_NR") + record.get("KENNZEICHEN");
+                if (pointType.equals("EP")) {
+                    pointName = record.get("KG_NUMMER") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
+                } else if (pointType.equals("TP")) {
+                    pointName = record.get("OeK50_BMN_NR") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
                 }
                 LOG.debug("Parsing ETRS '" + pointName + "'");
                 Double geoX = this.parseDouble(record.get("X"));
@@ -265,10 +265,10 @@ public class BEVMerger {
                 // System.out.println("record: " + record);
                 String pointName = null;
                 String pointType = record.get("PUNKTTYP");
-                if (pointType.equals("TP")) {
-                    pointName = record.get("KG_NUMMER") + "-" + record.get("PUNKTNUMMER") + record.get("KENNZEICHEN");
-                } else if (pointType.equals("EP")) {
-                    pointName = record.get("PUNKTNUMMER") + "-" + record.get("OeK50_BMN_NR") + record.get("KENNZEICHEN");
+                if (pointType.equals("EP")) {
+                    pointName = record.get("KG_NUMMER") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
+                } else if (pointType.equals("TP")) {
+                    pointName = record.get("OeK50_BMN_NR") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
                 }
                 LOG.debug("Parsing MGI '" + pointName + "'");
                 Double east = Double.parseDouble(record.get("RECHTSWERT"));
