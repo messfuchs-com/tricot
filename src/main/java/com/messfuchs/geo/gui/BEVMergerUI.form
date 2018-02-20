@@ -25,6 +25,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnInMGI">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Choose Input MGI File"/>
               </Properties>
               <Events>
@@ -33,6 +36,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnInETRS">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+T"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Choose Input ETRS File"/>
               </Properties>
               <Events>
@@ -41,6 +47,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnOut">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Choose Output File"/>
               </Properties>
               <Events>
@@ -51,6 +60,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnMerge">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+M"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Merge Input Files"/>
               </Properties>
               <Events>
@@ -61,6 +73,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Alt+F4"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Quit"/>
               </Properties>
               <Events>

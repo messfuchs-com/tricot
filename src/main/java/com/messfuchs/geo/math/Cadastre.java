@@ -134,7 +134,7 @@ public class Cadastre {
             LocalCoordinate tProjected = null;
             // Topocentric2DPoint targetProjected;
                     
-            // SOURCE GEOCENTRIC -> TARGET GEOCENTRIC (ETRS89/GRS80 -> MGI/BESSEL1841)
+            // SOURCE GEOCENTRIC -> TARGET GEOCENTRIC (ETRS89/GRS80 -> MGI31/BESSEL1841)
             try {
                 targetGeocentric = this.TRANSFOMATION.transform(gc.asArray());
                 cc.ecefXYZ = gc;

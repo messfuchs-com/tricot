@@ -51,10 +51,11 @@ public final class Constants {
     public static final double falseNorthing = -5000000.0;
     public static final double falseEasting = 0.0;
     public static final double originLatitude = 0.0;
-    public static final double originLongitude = (13.0+20.0/60.0);
+    public static final double originLongitudeM28 = (13.0+20.0/60.0);
+    public static final double originLongitudeM31 = (13.0+20.0/60.0);
+    public static final double originLongitudeM34 = (13.0+20.0/60.0);
     public static final double originScale = 1.0;
 
-    
     public final static SevenParameterTransformation ETRS89_TO_MGI_TRANSFORMATION = 
         SevenParameterTransformation.createSevenParameterTransformation(
             tx, ty, tz, rx, ry, rz, ds,
@@ -73,19 +74,35 @@ public final class Constants {
     
     public final static PrimeMeridian GREENWICH = PrimeMeridian.GREENWICH;
     
-    public final static TransverseMercator MGI = new TransverseMercator(BESSEL1841, new HashMap<String, Measure>(){{
+    public final static TransverseMercator MGI28 = new TransverseMercator(BESSEL1841, new HashMap<String, Measure>(){{
             put(Parameter.SCALE_FACTOR, new Measure(originScale, Unit.UNIT));
-            put(Parameter.CENTRAL_MERIDIAN, new Measure(originLongitude + GREENWICH.getLongitudeFromGreenwichInDegrees(), Unit.DEGREE));
+            put(Parameter.CENTRAL_MERIDIAN, new Measure(originLongitudeM28 + GREENWICH.getLongitudeFromGreenwichInDegrees(), Unit.DEGREE));
             put(Parameter.FALSE_EASTING, new Measure(falseEasting, Unit.METER));
             put(Parameter.FALSE_NORTHING, new Measure(falseNorthing, Unit.METER));
             put(Parameter.LATITUDE_OF_ORIGIN, new Measure(originLatitude, Unit.DEGREE));
         }});
+
+    public final static TransverseMercator MGI31 = new TransverseMercator(BESSEL1841, new HashMap<String, Measure>(){{
+        put(Parameter.SCALE_FACTOR, new Measure(originScale, Unit.UNIT));
+        put(Parameter.CENTRAL_MERIDIAN, new Measure(originLongitudeM31 + GREENWICH.getLongitudeFromGreenwichInDegrees(), Unit.DEGREE));
+        put(Parameter.FALSE_EASTING, new Measure(falseEasting, Unit.METER));
+        put(Parameter.FALSE_NORTHING, new Measure(falseNorthing, Unit.METER));
+        put(Parameter.LATITUDE_OF_ORIGIN, new Measure(originLatitude, Unit.DEGREE));
+    }});
+    
+    public final static TransverseMercator MGI34 = new TransverseMercator(BESSEL1841, new HashMap<String, Measure>(){{
+        put(Parameter.SCALE_FACTOR, new Measure(originScale, Unit.UNIT));
+        put(Parameter.CENTRAL_MERIDIAN, new Measure(originLongitudeM34 + GREENWICH.getLongitudeFromGreenwichInDegrees(), Unit.DEGREE));
+        put(Parameter.FALSE_EASTING, new Measure(falseEasting, Unit.METER));
+        put(Parameter.FALSE_NORTHING, new Measure(falseNorthing, Unit.METER));
+        put(Parameter.LATITUDE_OF_ORIGIN, new Measure(originLatitude, Unit.DEGREE));
+    }});
     
     /*public final static TransverseMercator getProjection() {
         TransverseMercator tm = new TransverseMercator(false);
         tm.setEllipsoid(BESSEL1841);
         tm.setScaleFactor(1.0);
-        tm.setCentralMeridian(new Longitude(originLongitude, org.opensextant.geodesy.Angle.DEGREES));
+        tm.setCentralMeridian(new Longitude(originLongitudeM31, org.opensextant.geodesy.Angle.DEGREES));
         tm.setOriginLatitude(new Latitude(originLatitude, org.opensextant.geodesy.Angle.DEGREES));
         return tm;
     }*/

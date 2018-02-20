@@ -77,7 +77,6 @@ public class BEVMerger {
     
     private static final Logger LOG = LogManager.getLogger(BEVMerger.class.getName());
 
-
     public BEVMerger (String inFileMGI, String inFileETRS, String outFileMerged) {
         this.inFileMGI = inFileMGI;
         this.inFileETRS = inFileETRS;

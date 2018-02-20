@@ -183,6 +183,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
 
         jMenu1.setText("Action");
 
+        mnInMGI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         mnInMGI.setText("Choose Input MGI File");
         mnInMGI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,6 +192,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         });
         jMenu1.add(mnInMGI);
 
+        mnInETRS.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         mnInETRS.setText("Choose Input ETRS File");
         mnInETRS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +201,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         });
         jMenu1.add(mnInETRS);
 
+        mnOut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         mnOut.setText("Choose Output File");
         mnOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,6 +211,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jMenu1.add(mnOut);
         jMenu1.add(jSeparator2);
 
+        mnMerge.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
         mnMerge.setText("Merge Input Files");
         mnMerge.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,6 +221,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jMenu1.add(mnMerge);
         jMenu1.add(jSeparator3);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem2.setText("Quit");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

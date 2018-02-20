@@ -5,7 +5,6 @@ import static com.messfuchs.geo.math.Constants.GREENWICH;
 import static com.messfuchs.geo.math.Constants.falseEasting;
 import static com.messfuchs.geo.math.Constants.falseNorthing;
 import static com.messfuchs.geo.math.Constants.originLatitude;
-import static com.messfuchs.geo.math.Constants.originLongitude;
 import static com.messfuchs.geo.math.Constants.originScale;
 import com.messfuchs.geo.models.LocalCoordinate;
 import com.messfuchs.geo.models.GeographicCoordinate;
@@ -18,6 +17,7 @@ import org.cts.Parameter;
 import org.cts.units.Measure;
 import org.cts.units.Unit;
 import org.cts.datum.PrimeMeridian;
+import static com.messfuchs.geo.math.Constants.originLongitudeM31;
 
 
 public class TransverseMercator extends Projection {
@@ -275,7 +275,7 @@ public class TransverseMercator extends Projection {
     public LocalCoordinate ell2yxMethodSWE(GeographicCoordinate coord) {
         double phi = Math.toRadians(coord.lat);
         double phiStar = this.getPhiStar(phi);
-        double deltaLambda = Math.toRadians(coord.lon - Constants.originLongitude);
+        double deltaLambda = Math.toRadians(coord.lon - Constants.originLongitudeM31);
         
         double k0 = originScale;
 
