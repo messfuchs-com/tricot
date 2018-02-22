@@ -53,12 +53,13 @@ public class CadastreTest extends TestCase {
         this.bevMerger = new BEVMerger(
             this.resourcePath + "/" + "0004769401_MGI_PUNKTART_EP.csv",
             this.resourcePath + "/" + "0004769401_ETRS_PUNKTART_EP.csv",
-            this.resourcePath + "/" + "0004769401_MERGE_PUNKTART_EP.csv"
+            this.resourcePath + "/" + "0004769401_MERGE_PUNKTART_EP.txt"
         );
         this.cadastre = new Cadastre();
+        this.cadastre.reportOutputFile = this.resourcePath + "/" + "0004769401_MERGE_PUNKTART_EP.txt.html";
     }
     
-    public void testPlaneSimilarity() throws IOException, java.lang.IllegalArgumentException, CoordinateDimensionException {
+    public void testPlaneSimilarity() throws IOException, java.lang.IllegalArgumentException, CoordinateDimensionException, Exception {
         LOG.debug("Load Data from File");
         try {
             String bmText = this.bevMerger.convert();

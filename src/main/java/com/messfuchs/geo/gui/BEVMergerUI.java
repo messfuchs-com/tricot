@@ -474,6 +474,8 @@ public class BEVMergerUI extends javax.swing.JFrame {
             this.merger.calculateLocalisation();
         } catch (CoordinateDimensionException ex) {
             java.util.logging.Logger.getLogger(BEVMergerUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(BEVMergerUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem_LocalisationActionPerformed
 

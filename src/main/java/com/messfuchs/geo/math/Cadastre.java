@@ -28,12 +28,19 @@ import java.util.ArrayList;
 import java.io.StringWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.util.logging.Level;
+import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.resource.util.StringResourceRepository;
+import org.apache.velocity.runtime.resource.loader.StringResourceLoader;
 
 import org.cts.datum.Ellipsoid;
 import org.cts.op.transformation.SevenParameterTransformation;
@@ -56,7 +63,8 @@ public class Cadastre {
     public SevenParameterTransformation TRANSFOMATION = Constants.ETRS89_TO_MGI_TRANSFORMATION;
     public Geocentric2Geographic gz2Gg = new Geocentric2Geographic(org.cts.datum.Ellipsoid.BESSEL1841);  
     
-    private String reportOutputFile = "src/test/resources/CadastreReport.html";
+    public String reportOutputFile;
+    public static final String REPORT_TEMPLATE = "/Cadastre.velocity.html";
     
     public static final double FALSE_EASTING = 0.0;
     public static final double FALSE_NORTHING = -5000000.0;
@@ -71,12 +79,13 @@ public class Cadastre {
     
     public PlaneSimilarity planeSimilarity = new PlaneSimilarity();
     
+    private VelocityEngine velocityEngine = null;
+    
     public Cadastre() {
         this.geocentricCoordinateList = new ArrayList<>();
         this.calcLocalCoordinateList = new ArrayList<>();
         this.realLocalCoordinateList = new ArrayList<>();
         this.cordComplexList = new ArrayList<>();
-             
     }
 
     public Cadastre(ArrayList<GeocentricCoordinate> geocentricCoordinateList) throws NonInvertibleOperationException {
@@ -131,7 +140,7 @@ public class Cadastre {
         return originLongitude;
     }
     
-    public boolean execute() throws CoordinateDimensionException, IOException {
+    public boolean execute() throws CoordinateDimensionException, IOException, Exception {
         LOG.debug("Compute Identical Local Points");
         this.geocentricCoordinateList.stream().forEach(gc -> {
             
@@ -236,17 +245,37 @@ public class Cadastre {
         return true;
     }
     
-    public void createReport(String outFileName) throws IOException{
-        VelocityEngine ve = new VelocityEngine();
-        ve.init();
+    public void createReport(String outFileName) throws IOException, Exception{
         
+        String myTemplateBody;
+        StringResourceRepository repository;
+
+        velocityEngine = getVelocityEngine(this.velocityEngine);
+        
+        // Reading Template Body from the template file(.vm file) in the jar
+        myTemplateBody = getTemplateFromJar();
+        
+        // Setting the template body in string repository with a template
+        // name. Here the template name is used as a key for future mapping.
+        repository = StringResourceLoader.getRepository();
+        repository.putStringResource("myTemplateName", myTemplateBody);
+                
+        Template t = velocityEngine.getTemplate("myTemplateName");
+        VelocityContext vc = this.getVelocityContext();
+        
+        LOG.debug("Write File to '" + outFileName + "'");
+        StringWriter sw = new StringWriter();
+        t.merge(vc, sw);
+        try (FileWriter fw = new FileWriter(outFileName)) {
+            fw.write(sw.toString());
+        }
+    }
+
+    private VelocityContext getVelocityContext() {
         LocalCoordinate centroidSource = this.planeSimilarity.getIdenticalAveragePoint().getSourcePoint();
         LocalCoordinate centroidTarget = this.planeSimilarity.getIdenticalAveragePoint().getTargetPoint();
         LocalCoordinate centroidDiff = centroidTarget.subtract(centroidSource);
-        
         LOG.debug(centroidDiff);
-        
-        Template t = ve.getTemplate("src/main/resources/CadastreReport.html");
         VelocityContext vc = new VelocityContext();
         vc.put("geocentric", this.geocentricCoordinateList);
         vc.put("local", this.realLocalCoordinateList);
@@ -261,13 +290,47 @@ public class Cadastre {
         vc.put("centroidTarget", centroidTarget);
         vc.put("str", String.class);
         vc.put("centroidDiff", centroidDiff);
-        
-        StringWriter sw = new StringWriter();
-        t.merge(vc, sw);
-        try (FileWriter fw = new FileWriter(outFileName)) {
-            fw.write(sw.toString());
-        }
+        return vc;
     }
-    
-    
+
+    private String getTemplateFromJar() {
+        // Reading the file contents from the JAR
+        LOG.debug("Template: " + REPORT_TEMPLATE);
+        InputStream inStream = Cadastre.class.getResourceAsStream(REPORT_TEMPLATE);
+        LOG.debug("CP: " + this.getClass().getResource("/"));
+        LOG.debug("InputStream: " + inStream);
+        StringBuilder stringBuilder = new StringBuilder();
+        InputStreamReader streamReader = new InputStreamReader(inStream);
+        BufferedReader bufferedReader = new BufferedReader(streamReader);
+        String line;
+
+        try {
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                stringBuilder.append(line);
+                stringBuilder.append("\n");
+            }
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Cadastre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return stringBuilder.toString();
+    }
+
+    private VelocityEngine getVelocityEngine(Object object) throws Exception
+    {
+        // Initializes the velocity engine with properties. We should specify
+        // the resource loader as string and the class for
+        // string.resource.loader in properties
+        Properties p = new Properties();
+
+        p.setProperty("resource.loader", "string");
+        p.setProperty("string.resource.loader.class",
+            "org.apache.velocity.runtime.resource.loader.StringResourceLoader");
+        velocityEngine = new VelocityEngine();
+        velocityEngine.init(p);
+
+        return (velocityEngine);
+    }
+
 }

@@ -36,6 +36,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.lang.StringUtils;
 // import java.lang.IllegalArgumentException;
 
 import com.messfuchs.geo.math.Cadastre;
@@ -210,17 +211,19 @@ public class BEVMerger {
     }
 
     public String createEpName (CSVRecord record) {
-        return record.get("KG_NUMMER") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
+        // return record.get("KG_NUMMER") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
+        return "EP_" + StringUtils.leftPad(record.get("KG_NUMMER"), 5, "0") + StringUtils.leftPad(record.get("PUNKTNUMMER"), 5, "_") + StringUtils.leftPad(record.get("KENNZEICHEN"), 3, "_");
     }
     
     public String createTpName (CSVRecord record) {
-        return record.get("OeK50_BMN_NR") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
+        //return record.get("OeK50_BMN_NR") + "_" + record.get("PUNKTNUMMER") + "_" + record.get("KENNZEICHEN");
+        return "TP_" + StringUtils.leftPad(record.get("OeK50_BMN_NR"), 5, "0") + StringUtils.leftPad(record.get("PUNKTNUMMER"), 5, "_") + StringUtils.leftPad(record.get("KENNZEICHEN"), 3, "_");
     }
     
     public void convertETRS() throws IOException {
         this.inputEtrsFiles.stream().forEach(f -> {
             try {
-                LOG.debug("[BEVMerger.java::convertETRS]Processing file" + f);
+                LOG.debug("[BEVMerger.java::convertETRS] Processing file " + f);
                 FileInputStream fs = new FileInputStream(f);
                 try (BufferedReader inFile = new BufferedReader(new InputStreamReader(fs))) {
                     Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
@@ -256,9 +259,9 @@ public class BEVMerger {
                         
                         Double elev = null;
                         if ( height != null && undul_grs80 != null && undul_bessel != null && !height.isNaN() && !undul_grs80.isNaN() && !undul_bessel.isNaN() ) {
-                            LOG.debug("Height: " + height);
-                            LOG.debug("N_GRS80: " + undul_grs80);
-                            LOG.debug("N_BESSEL: " + undul_bessel);
+                            // LOG.debug("Height: " + height);
+                            // LOG.debug("N_GRS80: " + undul_grs80);
+                            // LOG.debug("N_BESSEL: " + undul_bessel);
                             elev = height + undul_grs80 + undul_bessel;
                         }
                         GeocentricCoordinate tempGeoce = new GeocentricCoordinate(
@@ -284,7 +287,7 @@ public class BEVMerger {
     public void convertMGI() throws IOException {            
         this.inputMgiFiles.stream().forEach(f -> {
             try {
-                LOG.debug("[BEVMerger.java::convertMGI]Processing file" + f);
+                LOG.debug("[BEVMerger.java::convertMGI] Processing file " + f);
                 FileInputStream fs = new FileInputStream(f);
                 try (BufferedReader inFile = new BufferedReader(new InputStreamReader(fs))) {
                     Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
@@ -457,7 +460,7 @@ public class BEVMerger {
         return arrayListCoordinatePair;
     }
     
-    public void calculateLocalisation() throws CoordinateDimensionException {
+    public void calculateLocalisation() throws CoordinateDimensionException, Exception {
         this.cadastre = new Cadastre();
         this.cadastre.setReportOutputFile(this.outFileMergedReport);
         this.getCoordinatePairs().stream()
