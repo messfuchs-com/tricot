@@ -17,13 +17,22 @@ package com.messfuchs.geo.gui;
 
 import com.messfuchs.geo.models.BEVMerger;
 import com.messfuchs.geo.models.CoordinateType;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Properties;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.ImageIcon;
+import org.cts.CoordinateDimensionException;
 
 
 /**
@@ -33,6 +42,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class BEVMergerUI extends javax.swing.JFrame {
     
     private static final Logger LOG = LogManager.getLogger(BEVMerger.class);
+    private BEVMerger merger;
     
     private CoordinateType coordinateType;
 
@@ -82,6 +92,8 @@ public class BEVMergerUI extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jRadioButtonMenuItemGeocentric = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItemGeographic = new javax.swing.JRadioButtonMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem_Localisation = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnAbout = new javax.swing.JMenuItem();
 
@@ -252,6 +264,16 @@ public class BEVMergerUI extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jRadioButtonMenuItemGeographic);
+        jMenu3.add(jSeparator4);
+
+        jMenuItem_Localisation.setText("Calculate Localisation");
+        jMenuItem_Localisation.setEnabled(false);
+        jMenuItem_Localisation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_LocalisationActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_Localisation);
 
         jMenuBar1.add(jMenu3);
 
@@ -430,7 +452,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
         final Properties properties = new Properties();
         try {
             properties.load(this.getClass().getClassLoader().getResourceAsStream("app.properties"));
-            showMessageDialog(null, "Version: " + properties.getProperty("app.version"));
+            showMessageDialog(null, "Version: " + properties.getProperty("app.version") + "\n" + "Copyright: 2018 by contact@messfuchs.at");
         } catch (IOException e) {
             showMessageDialog(null, "not implemented yet :-(");
         }
@@ -445,6 +467,15 @@ public class BEVMergerUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.coordinateType = CoordinateType.Geographic;
     }//GEN-LAST:event_jRadioButtonMenuItemGeographicActionPerformed
+
+    private void jMenuItem_LocalisationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_LocalisationActionPerformed
+        try {
+            // TODO add your handling code here:
+            this.merger.calculateLocalisation();
+        } catch (CoordinateDimensionException ex) {
+            java.util.logging.Logger.getLogger(BEVMergerUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem_LocalisationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -483,26 +514,48 @@ public class BEVMergerUI extends javax.swing.JFrame {
     }
     
     public void actionChooseMGI() {
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV FILES", "csv");
+        this.jFileChooser1.setMultiSelectionEnabled(true);
+        this.jFileChooser1.setDialogTitle("Choose MGI File(s)");
+        this.jFileChooser1.addChoosableFileFilter(filter);
         int returnVal = this.jFileChooser1.showOpenDialog(this);
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File file = this.jFileChooser1.getSelectedFile();
-            this.txtInMGI.setText(file.getAbsolutePath());
+            List<java.io.File> fileList = Arrays.asList(this.jFileChooser1.getSelectedFiles());
+            List<String> filePathList = new ArrayList();
+            fileList.stream().forEach(file -> {
+                filePathList.add(file.getAbsolutePath());
+            });
+            this.txtInMGI.setText(String.join(";", filePathList));
         } else {
             LOG.warn("File access cancelled by user.");
         }
     }
     
     public void actionChooseETRS() {
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV FILES", "csv");
+        this.jFileChooser1.setMultiSelectionEnabled(true);
+        this.jFileChooser1.setDialogTitle("Choose ETRS File(s)");
+        this.jFileChooser1.addChoosableFileFilter(filter);
         int returnVal = this.jFileChooser1.showOpenDialog(this);
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File file = this.jFileChooser1.getSelectedFile();
-            this.txtInETRS.setText(file.getAbsolutePath());
+            /* java.io.File file = this.jFileChooser1.getSelectedFile();
+            this.txtInETRS.setText(file.getAbsolutePath()); */
+            List<java.io.File> fileList = Arrays.asList(this.jFileChooser1.getSelectedFiles());
+            List<String> filePathList = new ArrayList();
+            fileList.stream().forEach(file -> {
+                filePathList.add(file.getAbsolutePath());
+            });
+            this.txtInETRS.setText(String.join(";", filePathList));
         } else {
             LOG.warn("File access cancelled by user.");
         }
     }
     
     public void actionChooseOut() {
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+        this.jFileChooser1.setDialogTitle("Choose Output File");
+        this.jFileChooser1.setMultiSelectionEnabled(false);
+        this.jFileChooser1.addChoosableFileFilter(filter);
         int returnVal = this.jFileChooser1.showOpenDialog(this);
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
             java.io.File file = this.jFileChooser1.getSelectedFile();
@@ -514,15 +567,15 @@ public class BEVMergerUI extends javax.swing.JFrame {
     
     private void actionMerge() {
         String mergeText = "";
-        BEVMerger merger = new BEVMerger(
+        this.merger = new BEVMerger(
                 this.txtInMGI.getText(), 
                 this.txtInETRS.getText(),
                 this.txtOutMerged.getText()
         );
-        merger.setCoordinateType(this.coordinateType);
+        this.merger.setCoordinateType(this.coordinateType);
         
         try {
-            mergeText = merger.convert();
+            mergeText = this.merger.convert();
         } catch (java.io.IOException e)  {
             e.printStackTrace();
             LOG.error("There was an Error");
@@ -537,6 +590,7 @@ public class BEVMergerUI extends javax.swing.JFrame {
                 showMessageDialog(null, e);
             } 
         }
+        this.jMenuItem_Localisation.setEnabled(this.merger.getCoupledPoints() >= 4);
         this.lblStatus.setText(mergeText);
         if (mergeText.length() > 0) {
             showMessageDialog(null, mergeText);
@@ -561,11 +615,13 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem_Localisation;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemGeocentric;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemGeographic;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JMenuItem mnAbout;
     private javax.swing.JMenuItem mnInETRS;
@@ -576,4 +632,5 @@ public class BEVMergerUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtInMGI;
     private javax.swing.JTextField txtOutMerged;
     // End of variables declaration//GEN-END:variables
+
 }

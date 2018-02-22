@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
 // import android.util.Log;
 import org.apache.logging.log4j.LogManager;
@@ -37,8 +38,13 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
 // import java.lang.IllegalArgumentException;
 
+import com.messfuchs.geo.math.Cadastre;
+import java.util.Arrays;
+
 
 import java.util.Locale;
+import java.util.logging.Level;
+import org.cts.CoordinateDimensionException;
 
 
 /**
@@ -60,16 +66,21 @@ enum PointType {
 
 public class BEVMerger {
     
-    private String inFileMGI, inFileETRS, outFileMerged;
+    private String inFileMGI, inFileETRS, outFileMerged, outFileMergedReport;
     public File fileMGI, fileETRS, fileMERGE;
     public InputStream isMGI, isETRS;
     public OutputStream osMERGE;
     public Reader rMGI, rETRS;
+    private Integer coupledPoints = 0;
     private ArrayList<CoordinatePair> coordinatePairList;
     private final ArrayList<GeocentricCoordinate> geocentricCoordinates;
     private final ArrayList<LocalCoordinate> localCoordinates;
     private final ArrayList<GeographicCoordinate> geographicCoordinates;
     private CoordinateType coordinateType = CoordinateType.Geocentric;
+    private Cadastre cadastre = null;
+    
+    private final ArrayList<String> inputMgiFiles = new ArrayList<>();
+    private final ArrayList<String> inputEtrsFiles = new ArrayList<>();
 
     private static final String TAG = "BEVMerger";
 
@@ -81,17 +92,28 @@ public class BEVMerger {
         this.inFileMGI = inFileMGI;
         this.inFileETRS = inFileETRS;
         this.outFileMerged = outFileMerged;
+        this.outFileMergedReport = this.outFileMerged + ".html";
         this.fileMERGE = new File(outFileMerged);
         this.fileETRS = new File(inFileETRS);
         this.fileMGI = new File(inFileMGI);
+        String[] files = null;
         
         try {
+            // check all Inputs of MGI
+            files = this.inFileMGI.split("\\s*;\\s*");
+            Arrays.asList(files).stream().forEach(f -> {
+                this.inputMgiFiles.add(f);
+            });
             this.isMGI = new FileInputStream(this.fileMGI);
         } catch (FileNotFoundException e) {
             System.out.println("In File MGI not found");
             e.printStackTrace();
         }
         try {
+            files = this.inFileETRS.split("\\s*;\\s*");
+            Arrays.asList(files).stream().forEach(f -> {
+                this.inputEtrsFiles.add(f);
+            });
             this.isETRS = new FileInputStream(this.fileETRS);
         } catch (FileNotFoundException e) {
             System.out.println("In File ETRS not found");
@@ -163,7 +185,6 @@ public class BEVMerger {
         }
     }
     
-    
     public String getInFileMGI() {
         return inFileMGI;
     }
@@ -197,103 +218,111 @@ public class BEVMerger {
     }
     
     public void convertETRS() throws IOException {
-        try {
-            // Reader inFileETRS = new FileReader(this.getInFileETRS());
-            // Reader inFile = new InputStreamReader( this.isETRS );
-            BufferedReader inFile = new BufferedReader(new InputStreamReader(this.isETRS));
-
-            Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
-            
-            for (CSVRecord record : records) {
-                Double lat = null, lon = null;
-                String pointName = null;
-                String pointType = record.get("PUNKTTYP");
-                if (pointType.equals("EP")) {
-                    pointName = this.createEpName(record);
-                } else if (pointType.equals("TP")) {
-                    pointName = this.createTpName(record);
+        this.inputEtrsFiles.stream().forEach(f -> {
+            try {
+                LOG.debug("[BEVMerger.java::convertETRS]Processing file" + f);
+                FileInputStream fs = new FileInputStream(f);
+                try (BufferedReader inFile = new BufferedReader(new InputStreamReader(fs))) {
+                    Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
+                    
+                    for (CSVRecord record : records) {
+                        Double lat = null, lon = null;
+                        String pointName = null;
+                        String pointType = record.get("PUNKTTYP");
+                        if (pointType.equals("EP")) {
+                            pointName = this.createEpName(record);
+                        } else if (pointType.equals("TP")) {
+                            pointName = this.createTpName(record);
+                        }
+                        LOG.debug("Parsing ETRS '" + pointName + "'");
+                        Double geoX = this.parseDouble(record.get("X"));
+                        Double geoY = this.parseDouble(record.get("Y"));
+                        Double geoZ = this.parseDouble(record.get("Z"));
+                        // Double east = Double.parseDouble(record.get("RW"));
+                        // Double north = Double.parseDouble(record.get("HW"));
+                        Double height = this.parseDouble(record.get("HOEHE"));
+                        Double undul_grs80 = this.parseDouble(record.get("UNDULATION_GRS80"));
+                        Double undul_bessel = this.parseDouble(record.get("UNDULATION_BESSEL"));
+                        if (record.isMapped("BREITE")) {
+                            lat = this.parseDouble(record.get("BREITE"));
+                        } else {
+                            LOG.debug("Latitude not mapped");
+                        }
+                        if (record.isMapped("LAENGE")) {
+                            lon = this.parseDouble(record.get("LAENGE"));
+                        } else {
+                            LOG.debug("Longitude not mapped");
+                        }
+                        
+                        Double elev = null;
+                        if ( height != null && undul_grs80 != null && undul_bessel != null && !height.isNaN() && !undul_grs80.isNaN() && !undul_bessel.isNaN() ) {
+                            LOG.debug("Height: " + height);
+                            LOG.debug("N_GRS80: " + undul_grs80);
+                            LOG.debug("N_BESSEL: " + undul_bessel);
+                            elev = height + undul_grs80 + undul_bessel;
+                        }
+                        GeocentricCoordinate tempGeoce = new GeocentricCoordinate(
+                                pointName, geoX, geoY, geoZ
+                        );
+                        GeographicCoordinate tempGeogr = new GeographicCoordinate(
+                                pointName, lat, lon, elev
+                        );
+                        
+                        this.geocentricCoordinates.add(tempGeoce);
+                        this.geographicCoordinates.add(tempGeogr);
+                        LOG.debug("Added ETRS '" + tempGeoce.name + "'");
+                    }
                 }
-                LOG.debug("Parsing ETRS '" + pointName + "'");
-                Double geoX = this.parseDouble(record.get("X"));
-                Double geoY = this.parseDouble(record.get("Y"));
-                Double geoZ = this.parseDouble(record.get("Z"));
-                // Double east = Double.parseDouble(record.get("RW"));
-                // Double north = Double.parseDouble(record.get("HW"));
-                Double height = this.parseDouble(record.get("HOEHE"));
-                Double undul_grs80 = this.parseDouble(record.get("UNDULATION_GRS80"));
-                Double undul_bessel = this.parseDouble(record.get("UNDULATION_BESSEL"));
-                if (record.isMapped("BREITE")) {
-                    lat = this.parseDouble(record.get("BREITE"));
-                } else {
-                    LOG.debug("Latitude not mapped");
-                }
-                if (record.isMapped("LAENGE")) {
-                    lon = this.parseDouble(record.get("LAENGE"));
-                } else {
-                    LOG.debug("Longitude not mapped");
-                }
-                
-                Double elev = null;
-                if ( height != null && undul_grs80 != null && undul_bessel != null && !height.isNaN() && !undul_grs80.isNaN() && !undul_bessel.isNaN() ) {
-                    LOG.debug("Height: " + height);
-                    LOG.debug("N_GRS80: " + undul_grs80);
-                    LOG.debug("N_BESSEL: " + undul_bessel);
-                    elev = height + undul_grs80 + undul_bessel;
-                } 
-                GeocentricCoordinate tempGeoce = new GeocentricCoordinate(
-                        pointName, geoX, geoY, geoZ
-                );
-                GeographicCoordinate tempGeogr = new GeographicCoordinate(
-                        pointName, lat, lon, elev
-                );
-                
-                this.geocentricCoordinates.add(tempGeoce);
-                this.geographicCoordinates.add(tempGeogr);
-                LOG.debug("Added ETRS '" + tempGeoce.name + "'");
-
-            }
-            inFile.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            } catch (FileNotFoundException ex) {
+                java.util.logging.Logger.getLogger(BEVMerger.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(BEVMerger.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        });
     }
 
-    public void convertMGI() throws IOException {
-        try {
-            // Reader inFile = new FileReader(this.getInFileMGI());
-            // Reader inFile = new FileReader(this.fileMGI);
-            // Reader inFile = new InputStreamReader( this.isMGI );
-            BufferedReader inFile = new BufferedReader(new InputStreamReader(this.isMGI));
-
-            Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
-            
-            for (CSVRecord record : records) {
-                // System.out.println("record: " + record);
-                String pointName = null;
-                String pointType = record.get("PUNKTTYP");
-                if (pointType.equals("EP")) {
-                    pointName = this.createEpName(record);
-                } else if (pointType.equals("TP")) {
-                    pointName = this.createTpName(record);
+    public void convertMGI() throws IOException {            
+        this.inputMgiFiles.stream().forEach(f -> {
+            try {
+                LOG.debug("[BEVMerger.java::convertMGI]Processing file" + f);
+                FileInputStream fs = new FileInputStream(f);
+                try (BufferedReader inFile = new BufferedReader(new InputStreamReader(fs))) {
+                    Iterable<CSVRecord> records = CSVFormat.RFC4180.withDelimiter(';').withFirstRecordAsHeader().parse(inFile);
+                    
+                    for (CSVRecord record : records) {
+                        // System.out.println("record: " + record);
+                        String pointName = null;
+                        String pointType = record.get("PUNKTTYP");
+                        if (pointType.equals("EP")) {
+                            pointName = this.createEpName(record);
+                        } else if (pointType.equals("TP")) {
+                            pointName = this.createTpName(record);
+                        }
+                        LOG.debug("Parsing MGI '" + pointName + "'");
+                        Double east = Double.parseDouble(record.get("RECHTSWERT"));
+                        Double north = Double.parseDouble(record.get("HOCHWERT"));
+                        Double height = this.parseDouble(record.get("HOEHE"));
+                        
+                        LocalCoordinate tempCoord = new LocalCoordinate(
+                                pointName, east, north, height
+                        );
+                        
+                        this.localCoordinates.add(tempCoord);
+                        // System.out.println("Added MGI '" + tempGeoce.name + "'");
+                        
+                    }
                 }
-                LOG.debug("Parsing MGI '" + pointName + "'");
-                Double east = Double.parseDouble(record.get("RECHTSWERT"));
-                Double north = Double.parseDouble(record.get("HOCHWERT"));
-                Double height = this.parseDouble(record.get("HOEHE"));
-                
-                LocalCoordinate tempCoord = new LocalCoordinate(
-                        pointName, east, north, height
-                );
-                
-                this.localCoordinates.add(tempCoord);
-                // System.out.println("Added MGI '" + tempGeoce.name + "'");
- 
+
+            } catch (FileNotFoundException ex) {
+                java.util.logging.Logger.getLogger(BEVMerger.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(BEVMerger.class.getName()).log(Level.SEVERE, null, ex);
             }
-            inFile.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        });
+    }
+    
+    public Integer getCoupledPoints() {
+        return this.coupledPoints;
     }
     
     public String convert() throws IOException {
@@ -371,6 +400,7 @@ public class BEVMerger {
                 LOG.debug("Added " + cp.getName());
             }
             resultText = "Merged " + identicalPoints + " identical Points";
+            this.coupledPoints = identicalPoints;
 
             LOG.info("CSV file was created successfully !!!");
          
@@ -425,5 +455,19 @@ public class BEVMerger {
         
         System.out.println(s.toString());
         return arrayListCoordinatePair;
+    }
+    
+    public void calculateLocalisation() throws CoordinateDimensionException {
+        this.cadastre = new Cadastre();
+        this.cadastre.setReportOutputFile(this.outFileMergedReport);
+        this.getCoordinatePairs().stream()
+            .forEach(cp -> {
+                this.cadastre.addCoordinatePair(cp);
+            });
+        try {
+            this.cadastre.execute();
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(BEVMerger.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

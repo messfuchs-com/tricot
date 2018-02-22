@@ -71,22 +71,34 @@ public class LocalCoordinate implements  StringComparable {
     }
 
     public LocalCoordinate add(LocalCoordinate other) {
+        Double otherHeight = 0.0;
+        if (other.getHeight() != null) {
+            otherHeight = other.getHeight();
+        }
         return new LocalCoordinate(
                 this.getName(),
                 this.getEast() + other.getEast(),
                 this.getNorth() + other.getNorth(),
-                this.getHeight() + other.getHeight()
+                this.getHeight() + otherHeight
         );
     }
 
     public LocalCoordinate subtract(LocalCoordinate other) {
         // System.out.println(this + " - " + other);
+        Double otherHeight = 0.0;
+        Double thisHeight = 0.0;
+        if (other.getHeight() != null) {
+            otherHeight = other.getHeight();
+        }
+        if (this.getHeight() != null) {
+            thisHeight = this.getHeight();
+        }
         
         LocalCoordinate tmpCoordinate = new LocalCoordinate(
                 "",
                 this.getEast() - other.getEast(),
                 this.getNorth() - other.getNorth(),
-                this.getHeight() - other.getHeight()
+                thisHeight - otherHeight
         );
         tmpCoordinate.setName(this.getName() + "_sub_" + other.getName());
         // System.out.println("Diff: " + tmpCoordinate);

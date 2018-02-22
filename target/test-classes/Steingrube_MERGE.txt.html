@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<!--
+Copyright 2017 jurgen.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+    <head>
+        <title>Plane Similarity Result</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+            .card-header {background-color: activeborder; }
+            .text-white {color: white; }
+            .text-danger {color: crimson; }
+            .text-right {text-align: right; }
+            .text-success {color: limegreen; }
+            .text-bold {font-weight: bold; }
+            .bg-danger {background-color: crimson; }
+            .bg-info {background-color: cornflowerblue; }
+            .bg-success {background-color: limegreen;  }
+            .container {width: 920px ; margin:0 auto; }
+            .table {width: 100%; padding: 10px; border-collapse: collapse; border-spacing: 5px; }
+            .row {margin-top: 30px; }
+            .top-link {text-align: right; width: 100%}
+            .tb-20 {width: 20%; }
+            .tb-40 {width: 40%; }
+            
+            table {border-style: solid; }
+            td {padding-right: 5px; padding-left: 5px; }
+            th {text-align: left; }
+        </style>
+        <!-- Bootstrap CSS -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+-->    </head>
+    <body>
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title bg-info text-white">TOC</h2>
+                        </div>
+                        <div class="card-block">
+                            <ul>
+                                <li><a href="#global-trafo">Global Transformation Parameter Set</a></li>
+                                <li><a href="#global-projection">Global Projection Parameter Set</a></li>
+                                <li><a href="#local-trafo">Local Transformation Parameter Set</a></li>
+                                <li><a href="#trafo-results">Transformation Results</a>
+                                                                        <ul>
+                                                                                <li><a href="#result-16110_51_A1">16110_51_A1 <span class="text-success"> (OK)</span></a></li>
+                                                                                <li><a href="#result-16110_55_A1">16110_55_A1 <span class="text-success"> (OK)</span></a></li>
+                                                                                <li><a href="#result-16110_65_A1">16110_65_A1 <span class="text-success"> (OK)</span></a></li>
+                                                                                <li><a href="#result-16110_63_A1">16110_63_A1 <span class="text-success"> (OK)</span></a></li>
+                                                                                <li><a href="#result-58_53_G1">58_53_G1 <span class="text-success"> (OK)</span></a></li>
+                                                                                <li><a href="#result-58_96_E1">58_96_E1 <span class="text-success"> (OK)</span></a></li>
+                                                                            </ul>
+                                                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">                            
+                            <h2 class="card-title" id="global-trafo">Global Transformation Parameter Set</h2>
+                        </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">Attribute</th>
+                                        <th class="tb-40">Value</th>
+                                        <th class="tb-20">Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Method</th>
+                                        <td class="text-right">SevenParameter MGI -> ETRS89</td>
+                                        <td>EPSG::1618</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Translation X</th>
+                                        <td class="text-right">577.326</td>
+                                        <td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Translation Y</th>
+                                        <td class="text-right">90.129</td>
+                                        <td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Translation Z</th>
+                                        <td class="text-right">463.919</td>
+                                        <td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Rotation X</th>
+                                        <td class="text-right">5.137</td>
+                                        <td>deg_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Rotation Y</th>
+                                        <td class="text-right">1.474</td>
+                                        <td>deg_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Rotation Z</th>
+                                        <td class="text-right">5.297</td>
+                                        <td>deg_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Scale</th>
+                                        <td class="text-right">2.4232</td>
+                                        <td>ppm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <p><a class="top-link" href="#top">Top</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h2 class="card-title" id="global-projection">Projection Parameter Set</h2>                            
+                        </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">Attribute</th>
+                                        <th class="tb-40">Value</th>
+                                        <th class="tb-20">Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Method</th><td class="text-right">Transverse Mercator</td><td>EPSG::1800[456]</td>                                      
+                                    </tr>
+                                    <tr>
+                                        <th>Latitude of Origin</th><td class="text-right">0.000</td><td>[NS]dd mm ss</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Longitude of Origin</th><td class="text-right">E 1[036] 20 00</td><td>[EW] dd mm ss</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Scale</th><td class="text-right">1.000</td><td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>False Easting</th><td class="text-right">0.000</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>False Northing</th><td class="text-right">-5000000.000</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ellipsoid</th><td>Bessel 1841</td><td>EPSG::7009</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <p><a class="top-link" href="#top">Top</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h2 class="card-title" id="local-trafo">Local Transformation Parameter Set</h2>
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">Parameters</h4>
+                            <table class="table" border="1">
+                                <tbody>
+                                    <tr>
+                                        <th class="tb-40">Source Centroid East</th><td class="text-right tb-40">-2927,879</td><td class="tb-20">m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Source Centroid North</th><td class="text-right">322995,437</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Target Centroid East</th><td class="text-right">-2927,888</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Target Centroid North</th><td class="text-right">322995,790</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Translation East</th><td class="text-right">-0,010</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Translation North</th><td class="text-right">0,353</td><td>m</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th>Rotation</th><td class="text-right">-0,011</td><td>deg_sec</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Scale</th><td class="text-right">110,8629</td><td>ppm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h4 class="card-title">Statistic</h4>
+                            <table class="table" border="1">
+                                <tbody>
+                                    <tr>
+                                        <th class="tb-40">Number of identical Points</th><td class="tb-40 text-right">6</td><td class="tb-20"/>
+                                    </tr>
+                                    <tr>
+                                        <th>Min Residual East</th><td class="text-right">-0,002</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Min Residual North</th><td class="text-right">-0,001</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Max Residual East</th><td class="text-right">-0,024</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Max Residual North</th><td class="text-right">-0,023</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Avg Residual East</th><td class="text-right">0,000</td><td>m</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Avg Residual North</th><td class="text-right">0,003</td><td>m</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <p><a class="top-link" href="#top">Top</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h2 class="card-title" id="trafo-results">Transformation Results</h2>
+                        </div>
+                                                                        <div class="card-block">
+                                                                                                                        <h4 class="card-title bg-success text-white" id="result-16110_51_A1">16110_51_A1</h4>
+                                                        <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4101071,827</td>
+                                        <td>Y</td><td class="text-right">1198283,187</td>
+                                        <td>Z</td><td class="text-right">4720072,646</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MGI</td>
+                                        <td>X</td><td class="text-right">4100481,606</td>
+                                        <td>Y</td><td class="text-right">1198202,389</td>
+                                        <td>Z</td><td class="text-right">4719596,753</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-3312,890</td>
+                                        <td>North</td><td class="text-right">322433,490</td>
+                                        <td>Height</td><td class="text-right">211,810</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Intermediate (GlobalTrafo + Projection)</td>
+                                        <td>East</td><td class="text-right">-3312,899</td>
+                                        <td>North</td><td class="text-right">322433,133</td>
+                                        <td>Height</td><td class="text-right">211,703</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-3312,904</td>
+                                        <td>North</td><td class="text-right">322433,492</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right text-bold">-0,014</td>
+                                        <td>North</td><td class="text-right text-bold">0,002</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                    </div>  <!-- card-block -->
+                                                <div class="card-block">
+                                                                                                                        <h4 class="card-title bg-success text-white" id="result-16110_55_A1">16110_55_A1</h4>
+                                                        <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100359,114</td>
+                                        <td>Y</td><td class="text-right">1199450,350</td>
+                                        <td>Z</td><td class="text-right">4720370,371</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MGI</td>
+                                        <td>X</td><td class="text-right">4099768,922</td>
+                                        <td>Y</td><td class="text-right">1199369,575</td>
+                                        <td>Z</td><td class="text-right">4719894,443</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-1992,480</td>
+                                        <td>North</td><td class="text-right">322896,990</td>
+                                        <td>Height</td><td class="text-right">194,740</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Intermediate (GlobalTrafo + Projection)</td>
+                                        <td>East</td><td class="text-right">-1992,443</td>
+                                        <td>North</td><td class="text-right">322896,645</td>
+                                        <td>Height</td><td class="text-right">194,734</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-1992,463</td>
+                                        <td>North</td><td class="text-right">322896,999</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right text-bold">0,017</td>
+                                        <td>North</td><td class="text-right text-bold">0,009</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                    </div>  <!-- card-block -->
+                                                <div class="card-block">
+                                                                                                                        <h4 class="card-title bg-success text-white" id="result-16110_65_A1">16110_65_A1</h4>
+                                                        <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100022,818</td>
+                                        <td>Y</td><td class="text-right">1198413,012</td>
+                                        <td>Z</td><td class="text-right">4720945,420</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MGI</td>
+                                        <td>X</td><td class="text-right">4099432,596</td>
+                                        <td>Y</td><td class="text-right">1198332,263</td>
+                                        <td>Z</td><td class="text-right">4720469,514</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-2893,290</td>
+                                        <td>North</td><td class="text-right">323738,410</td>
+                                        <td>Height</td><td class="text-right">212,160</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Intermediate (GlobalTrafo + Projection)</td>
+                                        <td>East</td><td class="text-right">-2893,273</td>
+                                        <td>North</td><td class="text-right">323738,043</td>
+                                        <td>Height</td><td class="text-right">211,996</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-2893,283</td>
+                                        <td>North</td><td class="text-right">323738,387</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right text-bold">0,007</td>
+                                        <td>North</td><td class="text-right text-bold">-0,023</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                    </div>  <!-- card-block -->
+                                                <div class="card-block">
+                                                                                                                        <h4 class="card-title bg-success text-white" id="result-16110_63_A1">16110_63_A1</h4>
+                                                        <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100559,942</td>
+                                        <td>Y</td><td class="text-right">1197984,385</td>
+                                        <td>Z</td><td class="text-right">4720624,678</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MGI</td>
+                                        <td>X</td><td class="text-right">4099969,710</td>
+                                        <td>Y</td><td class="text-right">1197903,615</td>
+                                        <td>Z</td><td class="text-right">4720148,788</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-3455,640</td>
+                                        <td>North</td><td class="text-right">323230,310</td>
+                                        <td>Height</td><td class="text-right">nul</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Intermediate (GlobalTrafo + Projection)</td>
+                                        <td>East</td><td class="text-right">-3455,639</td>
+                                        <td>North</td><td class="text-right">323229,969</td>
+                                        <td>Height</td><td class="text-right">237,715</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-3455,642</td>
+                                        <td>North</td><td class="text-right">323230,320</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right text-bold">-0,002</td>
+                                        <td>North</td><td class="text-right text-bold">0,010</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                    </div>  <!-- card-block -->
+                                                <div class="card-block">
+                                                                                                                        <h4 class="card-title bg-success text-white" id="result-58_53_G1">58_53_G1</h4>
+                                                        <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100900,430</td>
+                                        <td>Y</td><td class="text-right">1198417,157</td>
+                                        <td>Z</td><td class="text-right">4720182,557</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MGI</td>
+                                        <td>X</td><td class="text-right">4100310,212</td>
+                                        <td>Y</td><td class="text-right">1198336,366</td>
+                                        <td>Z</td><td class="text-right">4719706,659</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-3136,160</td>
+                                        <td>North</td><td class="text-right">322601,260</td>
+                                        <td>Height</td><td class="text-right">nul</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Intermediate (GlobalTrafo + Projection)</td>
+                                        <td>East</td><td class="text-right">-3136,136</td>
+                                        <td>North</td><td class="text-right">322600,902</td>
+                                        <td>Height</td><td class="text-right">208,567</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-3136,144</td>
+                                        <td>North</td><td class="text-right">322601,259</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right text-bold">0,016</td>
+                                        <td>North</td><td class="text-right text-bold">-0,001</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                    </div>  <!-- card-block -->
+                                                <div class="card-block">
+                                                                                                                        <h4 class="card-title bg-success text-white" id="result-58_96_E1">58_96_E1</h4>
+                                                        <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th class="tb-40">System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100460,049</td>
+                                        <td>Y</td><td class="text-right">1198662,461</td>
+                                        <td>Z</td><td class="text-right">4720496,791</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MGI</td>
+                                        <td>X</td><td class="text-right">4099869,836</td>
+                                        <td>Y</td><td class="text-right">1198581,689</td>
+                                        <td>Z</td><td class="text-right">4720020,883</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-2776,870</td>
+                                        <td>North</td><td class="text-right">323074,280</td>
+                                        <td>Height</td><td class="text-right">205,700</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Intermediate (GlobalTrafo + Projection)</td>
+                                        <td>East</td><td class="text-right">-2776,882</td>
+                                        <td>North</td><td class="text-right">323073,931</td>
+                                        <td>Height</td><td class="text-right">205,669</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-2776,894</td>
+                                        <td>North</td><td class="text-right">323074,283</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right text-bold">-0,024</td>
+                                        <td>North</td><td class="text-right text-bold">0,003</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                    </div>  <!-- card-block -->
+                                                                        <div class="card-footer">
+                            <p><a class="top-link" href="#top">Top</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!--             <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                                                <h4 class="card-title" id="result-16110_51_A1">16110_51_A1</h4>
+                                                    </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4101071,827</td>
+                                        <td>Y</td><td class="text-right">1198283,187</td>
+                                        <td>Z</td><td class="text-right">4720072,646</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-3312,890</td>
+                                        <td>North</td><td class="text-right">322433,490</td>
+                                        <td>Height</td><td class="text-right">211,810</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-3312,904</td>
+                                        <td>North</td><td class="text-right">322433,492</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right">-0,014</td>
+                                        <td>North</td><td class="text-right">0,002</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+                        <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                                                <h4 class="card-title" id="result-16110_55_A1">16110_55_A1</h4>
+                                                    </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100359,114</td>
+                                        <td>Y</td><td class="text-right">1199450,350</td>
+                                        <td>Z</td><td class="text-right">4720370,371</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-1992,480</td>
+                                        <td>North</td><td class="text-right">322896,990</td>
+                                        <td>Height</td><td class="text-right">194,740</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-1992,463</td>
+                                        <td>North</td><td class="text-right">322896,999</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right">0,017</td>
+                                        <td>North</td><td class="text-right">0,009</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+                        <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                                                <h4 class="card-title" id="result-16110_65_A1">16110_65_A1</h4>
+                                                    </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100022,818</td>
+                                        <td>Y</td><td class="text-right">1198413,012</td>
+                                        <td>Z</td><td class="text-right">4720945,420</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-2893,290</td>
+                                        <td>North</td><td class="text-right">323738,410</td>
+                                        <td>Height</td><td class="text-right">212,160</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-2893,283</td>
+                                        <td>North</td><td class="text-right">323738,387</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right">0,007</td>
+                                        <td>North</td><td class="text-right">-0,023</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+                        <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                                                <h4 class="card-title" id="result-16110_63_A1">16110_63_A1</h4>
+                                                    </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100559,942</td>
+                                        <td>Y</td><td class="text-right">1197984,385</td>
+                                        <td>Z</td><td class="text-right">4720624,678</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-3455,640</td>
+                                        <td>North</td><td class="text-right">323230,310</td>
+                                        <td>Height</td><td class="text-right">nul</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-3455,642</td>
+                                        <td>North</td><td class="text-right">323230,320</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right">-0,002</td>
+                                        <td>North</td><td class="text-right">0,010</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+                        <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                                                <h4 class="card-title" id="result-58_53_G1">58_53_G1</h4>
+                                                    </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100900,430</td>
+                                        <td>Y</td><td class="text-right">1198417,157</td>
+                                        <td>Z</td><td class="text-right">4720182,557</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-3136,160</td>
+                                        <td>North</td><td class="text-right">322601,260</td>
+                                        <td>Height</td><td class="text-right">nul</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-3136,144</td>
+                                        <td>North</td><td class="text-right">322601,259</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right">0,016</td>
+                                        <td>North</td><td class="text-right">-0,001</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+                        <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                                                <h4 class="card-title" id="result-58_96_E1">58_96_E1</h4>
+                                                    </div>
+                        <div class="card-block">
+                            <table class="table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Param1</th>
+                                        <th>Value1</th>
+                                        <th>Param2</th>
+                                        <th>Value2</th>
+                                        <th>Param3</th>
+                                        <th>Value3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>ECEF</td>
+                                        <td>X</td><td class="text-right">4100460,049</td>
+                                        <td>Y</td><td class="text-right">1198662,461</td>
+                                        <td>Z</td><td class="text-right">4720496,791</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Real (BEV)</td>
+                                        <td>East</td><td class="text-right">-2776,870</td>
+                                        <td>North</td><td class="text-right">323074,280</td>
+                                        <td>Height</td><td class="text-right">205,700</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Local Calc (GlobalTrafo + Projection + LocalTrafo)</td>
+                                        <td>East</td><td class="text-right">-2776,894</td>
+                                        <td>North</td><td class="text-right">323074,283</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Residuals (Calc - Real)</td>
+                                        <td>East</td><td class="text-right">-0,024</td>
+                                        <td>North</td><td class="text-right">0,003</td>
+                                        <td /><td class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                                            </div>
+                </div>
+            </div>
+             -->
+        </div>
+        
+         <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+-->    </body>
+</html>

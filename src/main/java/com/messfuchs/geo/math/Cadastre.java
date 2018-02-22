@@ -22,6 +22,7 @@ import com.messfuchs.geo.models.IdenticalPoint;
 import com.messfuchs.geo.models.CoordinateComplex;
 import com.messfuchs.geo.math.CoordinateConversion;
 import com.messfuchs.geo.math.TransverseMercator;
+import com.messfuchs.geo.models.CoordinatePair;
 
 import java.util.ArrayList;
 import java.io.StringWriter;
@@ -53,9 +54,9 @@ public class Cadastre {
     public final double[] originLongitudeArray = new double[] {10.0+20.0/60, 13.0+20.0/60, 16.0+20.0/60};
     
     public SevenParameterTransformation TRANSFOMATION = Constants.ETRS89_TO_MGI_TRANSFORMATION;
-    //public final TransverseMercator PROJECTION = new TransverseMercator(Constants.BESSEL1841);
-    //public final TransverseMercator PROJECTION = Constants.getProjection();
     public Geocentric2Geographic gz2Gg = new Geocentric2Geographic(org.cts.datum.Ellipsoid.BESSEL1841);  
+    
+    private String reportOutputFile = "src/test/resources/CadastreReport.html";
     
     public static final double FALSE_EASTING = 0.0;
     public static final double FALSE_NORTHING = -5000000.0;
@@ -91,6 +92,11 @@ public class Cadastre {
         this.geocentricCoordinateList.add(gl);
     }
     
+    public void addCoordinatePair(CoordinatePair cp) {
+        this.realLocalCoordinateList.add(cp.getLocal());
+        this.geocentricCoordinateList.add(cp.getGeocentric());
+    }
+    
     public void addCoordinatePair(LocalCoordinate lo, GeographicCoordinate gl) {
         try {
             GeocentricCoordinate temp = new GeocentricCoordinate(
@@ -102,6 +108,14 @@ public class Cadastre {
             LOG.error("Error while adding GeographicCoordinate");
             LOG.error(e);
         }
+    }
+    
+    public void setReportOutputFile(String outputFile) {
+        this.reportOutputFile = outputFile;
+    }
+        
+    public String getReportOutputFile() {
+        return this.reportOutputFile;
     }
     
     public double getClosestOriginLongitude(double longitude) {
@@ -139,10 +153,6 @@ public class Cadastre {
                 targetGeocentric = this.TRANSFOMATION.transform(gc.asArray());
                 cc.ecefXYZ = gc;
                 LOG.debug(gc);
-                /*CoordinateConversion projection = new CoordinateConversion(Constants.GRS80);
-                GeographicCoordinate t = projection.toGeographic(gc);
-                t.setCode("ETRS89");
-                LOG.debug(t);*/
                 tGeocentric = new GeocentricCoordinate(gc.getName(), targetGeocentric[0], targetGeocentric[1], targetGeocentric[2], "MGI");
                 cc.mgiXYZ = tGeocentric;
                 LOG.debug(tGeocentric);                
@@ -152,63 +162,28 @@ public class Cadastre {
             }
             
             // TARGET GEOCENTRIC -> TARGET GEOGRAPHIC
-            //try {
-                CoordinateConversion coordConv = new CoordinateConversion(TARGET_ELLIPSOID);
-                tGeographic = coordConv.toGeographic(tGeocentric);
-            
-                //targetGeographic = this.gz2Gg.transform(targetGeocentric);
-                /*tGeographic = new GeographicCoordinate(
-                    gc.getName(),
-                    Math.toDegrees(targetGeographic[0]),
-                    Math.toDegrees(targetGeographic[1]),
-                    targetGeographic[2]
-                );*/
-                LOG.debug(tGeographic);
-                cc.mgiEll = tGeographic;
-            /*} catch (IllegalCoordinateException e) {
-                LOG.error("Error while Geocentric2Geographic");
-                LOG.error(e);
-            }*/
+            CoordinateConversion coordConv = new CoordinateConversion(TARGET_ELLIPSOID);
+            tGeographic = coordConv.toGeographic(tGeocentric);
+
+            LOG.debug(tGeographic);
+            cc.mgiEll = tGeographic;
+
             
             // TARGET GEOGRAPHIC -> TARGET PROJECTED
-            //try {
-                TransverseMercator tM = new TransverseMercator(
-                        Constants.BESSEL1841,
-                        this.getClosestOriginLongitude(tGeographic.getLon()),
-                        0,
-                        1, 
-                        FALSE_EASTING, 
-                        FALSE_NORTHING
-                );
-                tProjected = tM.toProjected(tGeographic);
-                tProjected.setCode("MGI_GK");
-                /*tProjected = new LocalCoordinate(
-                    gc.getName(),
-                    targetProjected[0],
-                    targetProjected[1],
-                    targetProjected[2]
-                );*/
-                /*targetProjected = this.PROJECTION.toTransverseMercator(
-                    new Longitude(targetGeographic[0], Angle.DEGREES), 
-                    new Latitude(targetGeographic[1], Angle.DEGREES)
-                );*/
-                /*targetProjected = this.PROJECTION.toProjected(tGeographic);
-                LocalCoordinate tP = new LocalCoordinate(
-                    gc.getName(),
-                    targetProjected[0],
-                    targetProjected[1],
-                    targetProjected[2]
-                    //targetProjected.getEasting(),
-                    //targetProjected.getNorthing()
-                );*/
-                
-                this.calcLocalCoordinateList.add(tProjected);
-                cc.medYX = tProjected;
-                LOG.debug(tProjected);
-            /*} catch (CoordinateDimensionException e) {
-                LOG.error("Error while Projection");
-                LOG.error(e);
-            }*/
+            TransverseMercator tM = new TransverseMercator(
+                Constants.BESSEL1841,
+                this.getClosestOriginLongitude(tGeographic.getLon()),
+                0,
+                1, 
+                FALSE_EASTING, 
+                FALSE_NORTHING
+            );
+            tProjected = tM.toProjected(tGeographic);
+            tProjected.setCode("MGI_GK");
+
+            this.calcLocalCoordinateList.add(tProjected);
+            cc.medYX = tProjected;
+            LOG.debug(tProjected);
             
             this.cordComplexList.add(cc);
         });
@@ -256,7 +231,7 @@ public class Cadastre {
             }
         }
 
-        this.createReport("src/test/resources/CadastreReport.html");
+        this.createReport(this.reportOutputFile);
         
         return true;
     }
