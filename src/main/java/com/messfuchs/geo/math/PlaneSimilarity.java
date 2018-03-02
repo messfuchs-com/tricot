@@ -14,6 +14,7 @@ public class PlaneSimilarity {
     
     public static final double MAX_DIFF_EAST = 0.05;
     public static final double MAX_DIFF_NORTH = 0.05;
+    public static final double MAX_DIFF_LENGTH = 0.05;
         
     private ArrayList<IdenticalPoint> identicalPointList;
     private ArrayList<IdenticalPoint> residualPointList;
@@ -191,15 +192,22 @@ public class PlaneSimilarity {
                 diff.setName(ip.getTargetPoint().getName() + "_imp");
                 String outString = String.format("Point: %15s, d_East: %6.3f, d_North: %6.3f", diff.getName(), diff.getEast() , diff.getNorth());
                 diff.setCode("");
+
                 if (Math.abs(diff.getEast()) >= MAX_DIFF_EAST) {
                     diff.setCode(diff.getCode() + "EAST_EXCEEDED");
                     outString = outString + ", EAST_EXCEEDED";
                 }
+
                 if (Math.abs(diff.getNorth()) >= MAX_DIFF_NORTH) {
                     diff.setCode((diff.getCode() + " NORTH_EXCEEDED").trim());
-                    //diff.setCode(diff.getCode().toString().trim());
                     outString = outString + ", NORTH_EXCEEDED";
                 }
+
+                if (Math.abs(diff.getHorizontalLength()) >= MAX_DIFF_LENGTH) {
+                    diff.setCode((diff.getCode() + " HORIZONAL_LENGTH_EXCEEDED").trim());
+                    outString = outString + ", HORIZONAL_LENGTH_EXCEEDED";
+                }
+
                 LOG.debug(outString);
                 diff.setHeight(null);
                 this.targetPointAccuracyList.add(diff);
