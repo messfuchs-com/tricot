@@ -16,6 +16,7 @@
 package com.messfuchs.geo.models;
 
 import java.util.Objects;
+import java.lang.Math;
 
 
 /**
@@ -165,7 +166,13 @@ public class LocalCoordinate implements  StringComparable {
 
     public void setCode(String code) {
         this.code = code;
-    }    
+    }
+
+    public Double getHorizontalLength() {
+        return Math.sqrt(
+                Math.pow(this.getEast(), 2) + Math.pow(this.getNorth(), 2)
+        );
+    }
 
     @Override
     public int hashCode() {
